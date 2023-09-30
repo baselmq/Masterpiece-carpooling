@@ -9,7 +9,7 @@ import { PathFonts, PathFontsSize } from "../utils/PathFonts";
 import { PathColor } from "../utils/PathColor";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathIcons } from "../utils/PathIcons";
-import { AuthCxt } from "../context/AuthContext";
+import { AuthCxt } from "../context/Auth";
 import { useLogout } from "../hooks/useLogout";
 const CustomDrawer = (props) => {
   const { logout } = useLogout();

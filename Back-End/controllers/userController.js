@@ -17,7 +17,7 @@ exports.loginUser = async (req, res) => {
     // create token
     const token = createToken(user._id);
 
-    res.status(200).json({ status: "success", identifier, user, token }); // Use "identifier" in the response
+    res.status(200).json({ status: "success", identifier, token }); // Use "identifier" in the response
   } catch (error) {
     res.status(400).json({ status: "fail", error: error.message });
   }
@@ -41,7 +41,7 @@ exports.signupUser = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      data: user,
+      email,
       token,
     });
   } catch (error) {

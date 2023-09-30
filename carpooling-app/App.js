@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { AuthContextProvider } from "./src/context/Auth";
+import { AuthContextProvider } from "./src/context/AuthContext";
 import AppNav from "./src/routes/AppNav";
 import { BookingContextProvider } from "./src/context/BookingContext";
 import { PublishContextProvider } from "./src/context/PublishContext";

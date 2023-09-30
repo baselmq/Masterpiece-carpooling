@@ -1,20 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import Onboarding from "../screens/Onboarding/Onboarding";
-import SearchScreen from "../screens/SearchScreen/SearchLocation";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import WelcomeScreen from "../screens/Auth/WelcomeScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
 import NewPassword from "../screens/Auth/NewPassword";
 import ForgetPassword from "../screens/Auth/ForgetPassword";
-import { AuthCxt } from "../context/AuthContext";
 import LoadingCustom from "../components/Loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="Wrapper" component={Wrapper} /> */}
+      <Stack.Screen name="Wrapper" component={Wrapper} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />

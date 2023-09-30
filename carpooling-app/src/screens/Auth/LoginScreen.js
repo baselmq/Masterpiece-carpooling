@@ -6,7 +6,7 @@ import InputCustom from "../../components/InputCustom";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import BtnCustom from "../../components/buttons/BtnCustom";
 import { useForm } from "react-hook-form";
-import { AuthCxt } from "../../context/AuthContext";
+import { AuthCxt } from "../../context/Auth";
 import { useLogin } from "../../hooks/useLogin";
 
 const LoginScreen = ({ navigation }) => {

@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./AuthStack";
 import AppStack from "./DrawerNavigator";
-import { AuthCxt } from "../context/AuthContext";
+import { AuthCxt } from "../context/Auth";
 import LoadingCustom from "../components/Loading";
 import { useAuthContext } from "../hooks/useAuthContext";
 const AppNav = () => {
