@@ -63,7 +63,7 @@ export const PublishContextProvider = ({ children }) => {
     travelTime: null,
     price: 0,
   });
-  console.log("LocationContextHome state", state);
+  // console.log("LocationContextHome state", state);
   return (
     <PublishCxt.Provider value={{ ...state, dispatch }}>
       {children}

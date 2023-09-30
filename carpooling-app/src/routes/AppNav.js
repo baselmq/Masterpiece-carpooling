@@ -5,15 +5,16 @@ import AuthStack from "./AuthStack";
 import AppStack from "./DrawerNavigator";
 import { AuthCxt } from "../context/AuthContext";
 import LoadingCustom from "../components/Loading";
+import { useAuthContext } from "../hooks/useAuthContext";
 const AppNav = () => {
-  const { isLoading, userToken } = useContext(AuthCxt);
-
-  if (isLoading) {
-    return <LoadingCustom />;
-  }
+  // const { isLoading, userToken } = useContext(AuthCxt);
+  const { user } = useAuthContext();
+  // if (isLoading) {
+  //   return <LoadingCustom />;
+  // }
   return (
     <NavigationContainer>
-      {userToken !== null ? <AppStack /> : <AuthStack />}
+      {user !== null ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

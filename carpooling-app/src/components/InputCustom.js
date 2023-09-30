@@ -13,6 +13,7 @@ const InputCustom = ({
   placeholder,
   secureTextEntry,
   right,
+  keyboardType,
 }) => {
   return (
     <Controller
@@ -25,6 +26,7 @@ const InputCustom = ({
             label={label}
             value={value}
             onChangeText={onChange}
+            keyboardType={keyboardType}
             mode="outlined"
             style={{
               backgroundColor: PathColor.white,

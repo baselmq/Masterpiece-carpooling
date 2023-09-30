@@ -7,14 +7,16 @@ import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import BtnCustom from "../../components/buttons/BtnCustom";
 import { useForm } from "react-hook-form";
 import { AuthCxt } from "../../context/AuthContext";
+import { useLogin } from "../../hooks/useLogin";
 
 const LoginScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const { control, handleSubmit } = useForm();
 
-  const { login } = useContext(AuthCxt);
-  const onSubmit = (data) => {
-    console.log(data);
+  const { login, error, isLoading } = useLogin();
+
+  const onSubmit = async (data) => {
+    await login(data.phone, data.password);
   };
   const rules = {
     email: {
@@ -62,6 +64,8 @@ const LoginScreen = ({ navigation }) => {
             />
           }
         />
+        {error && <Text>{error}</Text>}
+
         <Text
           style={styles.forgetPass}
           onPress={() => navigation.navigate("ForgetPassword")}
@@ -71,7 +75,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       {/* ----------- button sign in ----------- */}
-      <BtnCustom title={"Sign In"} onPress={() => login()} />
+      <BtnCustom title={"Sign In"} onPress={handleSubmit(onSubmit)} />
 
       {/* ----------- button sign up ----------- */}
       <View style={styles.signup}>

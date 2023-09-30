@@ -6,9 +6,9 @@ import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AuthContextProvider } from "./src/context/AuthContext";
+
+import { AuthContextProvider } from "./src/context/Auth";
 import AppNav from "./src/routes/AppNav";
-import { LocationContextProvider } from "./src/context/LocationContext";
 import { BookingContextProvider } from "./src/context/BookingContext";
 import { PublishContextProvider } from "./src/context/PublishContext";
 
@@ -42,14 +42,12 @@ export default function App() {
   return (
     <AuthContextProvider>
       <PublishContextProvider>
-        <LocationContextProvider>
-          <BookingContextProvider>
-            <SafeAreaView style={styles.container}>
-              <AppNav />
-              <StatusBar style="auto" />
-            </SafeAreaView>
-          </BookingContextProvider>
-        </LocationContextProvider>
+        <BookingContextProvider>
+          <SafeAreaView style={styles.container}>
+            <AppNav />
+            <StatusBar style="auto" />
+          </SafeAreaView>
+        </BookingContextProvider>
       </PublishContextProvider>
     </AuthContextProvider>
   );

@@ -77,7 +77,7 @@ const NewPassword = ({ navigation }) => {
       </View>
 
       {/* ----------- button Register ----------- */}
-      <BtnCustom title={"Register"} onPress={handleSubmit(onSubmit)} />
+      <BtnCustom title={"Change Password"} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

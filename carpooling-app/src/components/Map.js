@@ -7,7 +7,6 @@ import { useBookingCxt } from "../hooks/useBookingCxt";
 import { PathIcons } from "../utils/PathIcons";
 
 const MapPublish = ({ name }) => {
-  // const { origin, destination, dispatch } = useLocationContext();
   const GOOGLE_MAP_API_KEY = "AIzaSyDdf6jkuHWroggBhlwZkIhKeToq7zxqT_k";
   const { origin: HO, destination: HD } = useBookingCxt();
   const { origin: PO, destination: PD, dispatch } = usePublishContext();

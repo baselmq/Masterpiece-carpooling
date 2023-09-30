@@ -10,8 +10,9 @@ import { PathColor } from "../utils/PathColor";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathIcons } from "../utils/PathIcons";
 import { AuthCxt } from "../context/AuthContext";
+import { useLogout } from "../hooks/useLogout";
 const CustomDrawer = (props) => {
-  const { logout } = useContext(AuthCxt);
+  const { logout } = useLogout();
 
   return (
     <View style={{ flex: 1 }}>
@@ -26,9 +27,7 @@ const CustomDrawer = (props) => {
       <View style={styles.bottomDrawer}>
         <TouchableOpacity
           style={{ paddingVertical: 15 }}
-          onPress={() => {
-            logout();
-          }}
+          onPress={() => logout()}
         >
           <View style={styles.SignOut}>
             {PathIcons.getSignOut((size = 24), (color = PathColor.gray[600]))}

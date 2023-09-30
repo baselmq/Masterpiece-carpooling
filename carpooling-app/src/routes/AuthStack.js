@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Wrapper" component={Wrapper} />
+      {/* <Stack.Screen name="Wrapper" component={Wrapper} /> */}
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -28,16 +28,19 @@ const AuthStack = () => {
 export default AuthStack;
 
 export const Wrapper = ({ navigation }) => {
-  const { viewOnboarding } = useContext(AuthCxt);
-  const checkOnBoarding = () => {
-    {
-      viewOnboarding
+  const checkOnboarding = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@viewedOnboarding");
+      value !== null
         ? navigation.replace("Login")
         : navigation.replace("Onboarding");
+    } catch (error) {
+      console.log("Error checking onboarding:", error);
     }
   };
+
   useEffect(() => {
-    checkOnBoarding();
+    checkOnboarding();
   }, []);
   return <LoadingCustom />;
 };

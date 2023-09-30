@@ -13,6 +13,13 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
+      type: String,
+      unique: true,
+      required: true,
+      lowercase: true,
+    },
+    phone: {
+      type: String,
       required: true,
       unique: true,
     },
@@ -21,7 +28,10 @@ const userSchema = new Schema(
       required: true,
       select: false,
     },
-    role: {
+    image: {
+      type: String,
+    },
+    gender: {
       type: String,
     },
     resetPasswordToken: String,
@@ -31,41 +41,41 @@ const userSchema = new Schema(
 );
 
 // -----------------new static login method -----------------
-userSchema.statics.login = async function (email, password, isAdmin = false) {
-  //validation
-
-  if (!email || !password) {
+userSchema.statics.login = async function (identifier, password) {
+  // Validation
+  if (!identifier || !password) {
     throw Error("All fields must be filled");
   }
 
-  const user = await this.findOne({ email }).select("+password");
+  // Determine whether the identifier is an email or phone
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+  const userQuery = isEmail ? { email: identifier } : { phone: identifier };
+
+  const user = await this.findOne(userQuery).select("+password");
 
   if (!user) {
-    throw Error("Incorrect email or password");
-  }
-
-  if (isAdmin && user.role !== "admin") {
-    throw new Error("You do not have admin privileges");
+    throw Error("Incorrect email or phone number or password");
   }
 
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    throw Error("Incorrect email or password bcrypt");
+    throw Error("Incorrect email or phone number or password");
   }
 
   return user;
 };
-
 // -----------------new static signup method -----------------
 userSchema.statics.addUser = async function (
   username,
   email,
+  phone,
   password,
-  role = "user"
+  image,
+  gender
 ) {
   //validation
-  if (!username || !email || !password) {
+  if (!username || !email || !phone || !password) {
     throw Error("All fields must be filled");
   }
 
@@ -78,8 +88,20 @@ userSchema.statics.addUser = async function (
   if (exist) {
     throw Error("Email Already in use");
   }
+  const existPhone = await this.findOne({ phone });
 
-  const user = await this.create({ username, email, password, role });
+  if (existPhone) {
+    throw Error("Phone Already in use");
+  }
+
+  const user = await this.create({
+    username,
+    email,
+    phone,
+    password,
+    image,
+    gender,
+  });
 
   return user;
 };
