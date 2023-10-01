@@ -1,11 +1,22 @@
+const express = require("express");
 const driverController = require("../controllers/driverController");
+const { requireAuth } = require("../middleware/requireAuth");
 
 const router = express.Router();
 
-// ----------------- driver route -----------------
-router.route("/").get(driverController.getAllDrivers);
+// middleware
+router.use(requireAuth);
+
+// driver route
+router
+  .route("/")
+  .get(driverController.getAllDrivers)
+  .post(driverController.createDriver);
 
 router
   .route("/:id")
   .get(driverController.getDriver)
-  .patch(driverController.getDriver);
+  .patch(driverController.updateDriver)
+  .delete(driverController.deleteDriver);
+
+module.exports = router;

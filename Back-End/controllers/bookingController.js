@@ -2,8 +2,9 @@ const Booking = require("../models/bookingModel");
 
 // ----------------- get All Booking -----------------
 exports.getAllBooking = async (req, res) => {
+  const user_id = req.user._id;
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find({ user_id }).sort({ createdAt: -1 });
     res.status(200).json({
       status: "success",
       results: bookings.length,
@@ -16,7 +17,8 @@ exports.getAllBooking = async (req, res) => {
 
 //createBooking
 exports.createBooking = async (req, res) => {
-  const { user_id, driver_id, trip_id } = req.body;
+  const user_id = req.user._id;
+  const { driver_id, trip_id } = req.body;
 
   try {
     const booking = await Booking.addBooking(user_id, driver_id, trip_id);

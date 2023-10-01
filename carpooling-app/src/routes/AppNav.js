@@ -9,14 +9,24 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const AppNav = () => {
   // const { isLoading, userToken } = useContext(AuthCxt);
   const { user } = useAuthContext();
-  // if (isLoading) {
-  //   return <LoadingCustom />;
-  // }
-  return (
-    <NavigationContainer>
-      {user !== null ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
-  );
+  if (user !== null) {
+    return (
+      <NavigationContainer>
+        <AppStack />
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
+    );
+  }
+  // return (
+  //   <NavigationContainer>
+  //     {user !== null ? <AppStack /> : <AuthStack />}
+  //   </NavigationContainer>
+  // );
 };
 
 export default AppNav;

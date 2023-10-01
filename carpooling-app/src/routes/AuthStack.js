@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Wrapper" component={Wrapper} />
+      <Stack.Screen name="WrapperAuth" component={WrapperAuth} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -25,7 +25,7 @@ const AuthStack = () => {
 
 export default AuthStack;
 
-export const Wrapper = ({ navigation }) => {
+export const WrapperAuth = ({ navigation }) => {
   const checkOnboarding = async () => {
     try {
       const value = await AsyncStorage.getItem("@viewedOnboarding");

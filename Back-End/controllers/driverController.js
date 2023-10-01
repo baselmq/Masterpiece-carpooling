@@ -16,7 +16,8 @@ exports.getAllDrivers = async (req, res) => {
 
 //createDriver
 exports.createDriver = async (req, res) => {
-  const { user_id, car_model, car_number, car_color, verified } = req.body;
+  const user_id = req.user._id;
+  const { car_model, car_number, car_color, verified } = req.body;
 
   try {
     const driver = await Driver.addDriver(

@@ -113,18 +113,35 @@ exports.resetPassword = async (req, res, next) => {
 };
 
 // ----------------- login -----------------
-exports.token = async (req, res) => {
-  const { token } = req.body;
+// exports.token = async (req, res) => {
+//   const { token } = req.body;
 
+//   try {
+//     const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
+//     const user = await User.findById(decodedToken._id);
+
+//     // create token
+//     // const token = createToken(user._id);
+
+//     res.status(200).json({ status: "success", user });
+//   } catch (error) {
+//     res.status(400).json({ status: "fail", error: error.message });
+//   }
+// };
+
+// ----------------- getMe -----------------
+exports.getMe = async (req, res) => {
+  const user_id = req.user._id;
   try {
-    const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
-    const user = await User.findById(decodedToken._id);
-
-    // create token
-    // const token = createToken(user._id);
-
-    res.status(200).json({ status: "success", user });
+    const user = await User.findById(user_id);
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
   } catch (error) {
-    res.status(400).json({ status: "fail", error: error.message });
+    res.status(404).json({
+      status: "fail",
+      message: error.message,
+    });
   }
 };

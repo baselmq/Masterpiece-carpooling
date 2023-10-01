@@ -16,7 +16,8 @@ exports.getAllRatings = async (req, res) => {
 
 //createRating
 exports.createRating = async (req, res) => {
-  const { user_id, driver_id, comments, rate } = req.body;
+  const user_id = req.user._id;
+  const { driver_id, comments, rate } = req.body;
 
   try {
     const rating = await Rating.addRating(user_id, driver_id, comments, rate);

@@ -1,8 +1,6 @@
 const express = require("express");
 const userController = require("../controllers/userController");
-const bookingController = require("../controllers/bookingController");
-const driverController = require("../controllers/driverController");
-const tripController = require("../controllers/tripController");
+const { requireAuth } = require("../middleware/requireAuth");
 
 const router = express.Router();
 
@@ -18,39 +16,15 @@ router.post("/forgot-password", userController.forgotPassword);
 // ----------------- reset password route -----------------
 router.put("/reset-password/:resetToken", userController.resetPassword);
 
-// ----------------- driver route -----------------
-router
-  .route("/driver")
-  .get(driverController.getAllDrivers)
-  .post(driverController.createDriver);
-
-router
-  .route("/driver/:id")
-  .get(driverController.getDriver)
-  .patch(driverController.updateDriver);
-
-// ----------------- booking route -----------------
-router
-  .route("/booking")
-  .get(bookingController.getAllBooking)
-  .post(bookingController.createBooking);
-
-router
-  .route("/booking/:id")
-  .get(bookingController.getBooking)
-  .delete(bookingController.deleteBooking);
-//   .patch(bookingController.updateBooking)
-
-// ----------------- trips route -----------------
-router
-  .route("/trips")
-  .get(tripController.getAllTrips)
-  .post(tripController.createTrip);
-
-router
-  .route("/trips/:id")
-  .get(tripController.getTrip)
-  .patch(tripController.updateTrip)
-  .delete(tripController.deleteTrip);
+router.use(requireAuth);
+// router.patch('/updateMyPassword', authController.updatePassword);
+router.get("/me", userController.getMe);
+// router.patch(
+//   '/updateMe',
+//   userController.uploadUserPhoto,
+//   userController.resizeUserPhoto,
+//   userController.updateMe
+// );
+// router.delete("/deleteMe", userController.deleteMe);
 
 module.exports = router;
