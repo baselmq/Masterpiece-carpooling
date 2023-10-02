@@ -18,10 +18,8 @@ const FormCar = ({ route, navigation }) => {
   const { registerDriver, error, isLoading } = useRegisterDriver();
 
   const onSubmit = async (data) => {
-    console.log(dataDriver);
-    console.log("-----------");
-    console.log(data);
-    // await registerDriver(data);
+    const NewData = { ...data, ...dataDriver, verified: "pending" };
+    await registerDriver(NewData);
   };
 
   return (

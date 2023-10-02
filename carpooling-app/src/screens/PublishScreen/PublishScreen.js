@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SetFromLocPublish } from "./components/LocationScreen";
 import { checkDateformat } from "../../components/date_time/CalendarCustom";
@@ -11,18 +11,61 @@ import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import HeaderScreens from "../../components/header/HeaderScreens";
 import BtnCustom from "../../components/buttons/BtnCustom";
 import JoinNow from "./components/JoinNow";
+import { useDriverCxt } from "../../hooks/useDriverCxt";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { PathApi } from "../../utils/PathApi";
+import LoadingCustom from "../../components/Loading";
 
 const PublishScreen = () => {
-  const { dispatch } = usePublishContext();
+  const { dispatch: dispatchDate } = usePublishContext();
   const dateNow = checkDateformat(Date());
-
+  const { user } = useAuthContext();
+  const { data, dispatch } = useDriverCxt();
+  console.log(data);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    dispatch({
+    dispatchDate({
       type: "SET_DATE",
       payload: dateNow,
     });
   }, []);
-  return <JoinNow />;
+
+  useEffect(() => {
+    const getDriver = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await fetch(`${PathApi.endpoint}/driver`, {
+        headers: { Authorization: `Bearer ${user}` },
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        setError(json.error);
+      }
+
+      if (response.ok) {
+        dispatch({ type: "SET_DATA", payload: json });
+        setIsLoading(false);
+        setError(null);
+      }
+    };
+
+    if (user) {
+      getDriver();
+    }
+  }, [user, dispatch, setIsLoading, setError]);
+
+  return isLoading ? (
+    <LoadingCustom />
+  ) : data !== null ? (
+    <SetFromLocPublish />
+  ) : (
+    <JoinNow />
+  );
 };
 
 export default PublishScreen;

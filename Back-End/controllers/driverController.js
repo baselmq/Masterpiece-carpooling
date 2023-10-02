@@ -49,8 +49,11 @@ exports.createDriver = async (req, res) => {
 
 // getDriver
 exports.getDriver = async (req, res) => {
+  const user_id = req.user._id;
+
   try {
-    const driver = await Driver.findById(req.params.id);
+    // const driver = await Driver.findById(req.params.id);
+    const driver = await Driver.find({ user_id });
     res.status(200).json({
       status: "success",
       data: driver,

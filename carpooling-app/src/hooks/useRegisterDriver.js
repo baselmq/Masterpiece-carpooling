@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useDriverCxt } from "./useDriverCxt";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PathApi } from "../utils/PathApi.js";
 
 export const useRegisterDriver = () => {
@@ -11,6 +10,7 @@ export const useRegisterDriver = () => {
   const { user } = useAuthContext();
 
   const registerDriver = async (data) => {
+    console.log(data);
     setIsLoading(true);
     setError(null);
 
@@ -20,7 +20,7 @@ export const useRegisterDriver = () => {
         Authorization: `Bearer ${user}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ identifier: email, password }),
+      body: JSON.stringify(data),
     });
 
     const json = await response.json();
@@ -28,15 +28,12 @@ export const useRegisterDriver = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
+      console.log(json.error);
     }
 
     if (response.ok) {
-      // save the user to local storage
-      AsyncStorage.setItem("userToken", json.token);
-
       // update the auth context
-      dispatch({ type: "LOGIN", payload: json });
-
+      dispatch({ type: "SET_DATA", payload: json });
       setIsLoading(false);
       setError(null);
     }
