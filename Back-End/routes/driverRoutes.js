@@ -13,6 +13,8 @@ router
   .get(driverController.getAllDrivers)
   .post(driverController.createDriver);
 
+router.route("/me").get(driverController.getMeDriver);
+
 router
   .route("/:id")
   .get(driverController.getDriver)

@@ -36,7 +36,7 @@ const PublishScreen = () => {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`${PathApi.endpoint}/driver`, {
+      const response = await fetch(`${PathApi.endpoint}/driver/8`, {
         headers: { Authorization: `Bearer ${user}` },
       });
 
