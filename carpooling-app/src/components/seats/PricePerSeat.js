@@ -1,17 +1,37 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { usePublishContext } from "../../hooks/usePublishCxt";
+import { useTripsCxt } from "../../hooks/useTripsCxt";
 import HeaderScreens from "../header/HeaderScreens";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import { PathIcons } from "../../utils/PathIcons";
 import BtnNext from "../buttons/BtnNext";
+import { useRegisterDriver } from "../../hooks/useRegisterDriver";
 
 const PricePerSeat = ({ navigation }) => {
-  const { travelTime, dispatch } = usePublishContext();
+  const {
+    origin,
+    destination,
+    date,
+    time,
+    numberOfSeats,
+    travelTime,
+    dispatch,
+    price: priceCxt,
+  } = usePublishContext();
   const [number, setNumber] = useState(1);
   const [price, setPrice] = useState(0);
+  const { dispatch: tripsDispatch } = useTripsCxt();
+  const type = "ADD_TRIPS";
+  const path = "trips";
+
+  const { registerDriver, isLoading, error } = useRegisterDriver(
+    tripsDispatch,
+    type,
+    path
+  );
 
   const maxPrice = price + 2;
   const minPrice = price < 3 ? 1 : price - 2;
@@ -40,6 +60,7 @@ const PricePerSeat = ({ navigation }) => {
     setPrice(roundedNumber);
     setNumber(roundedNumber);
   }
+
   function calculateExpectedPrice(travelTime) {
     const BASE_PRICE = 1; // Minimum price in dinars
     const SURGE_CHANGE_RATE = 0.5; // Price increase rate per second
@@ -57,6 +78,22 @@ const PricePerSeat = ({ navigation }) => {
     const formattedValue = calculateExpectedPrice(travelTime);
     roundToTwoDecimalPlaces(formattedValue);
   }, [travelTime]);
+
+  const handelSubmit = () => {
+    data = {
+      date,
+      time,
+      price: priceCxt,
+      seats: numberOfSeats,
+      origin,
+      destination,
+      travel_time: travelTime,
+    };
+    console.log(data.origin);
+    // registerDriver(data);
+    // navigation.navigate("Publish");
+  };
+
   return (
     <View style={styles.container}>
       <HeaderScreens title={""} navigation={navigation} />
@@ -96,13 +133,16 @@ const PricePerSeat = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+      {error && <Text>{error}</Text>}
+
       <BtnNext
+        publish={true}
         onPress={() => {
           dispatch({
             type: "SET_PRICE",
             payload: number,
           });
-          navigation.navigate("Publish");
+          handelSubmit();
         }}
       />
     </View>

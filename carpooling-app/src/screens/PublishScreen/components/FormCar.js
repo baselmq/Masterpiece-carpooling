@@ -20,6 +20,7 @@ const FormCar = ({ route, navigation }) => {
   const onSubmit = async (data) => {
     const NewData = { ...data, ...dataDriver, verified: "pending" };
     await registerDriver(NewData);
+    navigation.push("Publish");
   };
 
   return (

@@ -3,11 +3,13 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathIcons } from "../../utils/PathIcons";
 import { PathColor } from "../../utils/PathColor";
+import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 
-const BtnNext = ({ onPress }) => {
+const BtnNext = ({ onPress, publish = false }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.buttonCallout}>
+        {publish && <Text style={styles.publish}>Publish</Text>}
         {PathIcons.getArrowMap((size = 28), (color = "white"))}
       </TouchableOpacity>
     </View>
@@ -36,5 +38,11 @@ const styles = StyleSheet.create({
     color: PathColor.white,
     borderRadius: 50,
     padding: 20,
+  },
+  publish: {
+    color: PathColor.white,
+    fontFamily: PathFonts.PoppinsRegular,
+    fontSize: PathFontsSize.s18,
+    marginRight: 5,
   },
 });

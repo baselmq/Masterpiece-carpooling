@@ -10,7 +10,6 @@ export const useRegisterDriver = () => {
   const { user } = useAuthContext();
 
   const registerDriver = async (data) => {
-    console.log(data);
     setIsLoading(true);
     setError(null);
 
@@ -28,7 +27,6 @@ export const useRegisterDriver = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
-      console.log(json.error);
     }
 
     if (response.ok) {

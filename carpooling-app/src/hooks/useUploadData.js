@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PathApi } from "../utils/PathApi.js";
 
-export const useLogin = () => {
+export const useUploadData = (dispatch, type, path) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch } = useAuthContext();
+  const { user } = useAuthContext();
 
-  const login = async (email, password) => {
+  const uploadData = async (data) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${PathApi.endpoint}/user/login`, {
+    const response = await fetch(`${PathApi.endpoint}/${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ identifier: email, password }),
+      headers: {
+        Authorization: `Bearer ${user}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
     const json = await response.json();
@@ -26,16 +28,12 @@ export const useLogin = () => {
     }
 
     if (response.ok) {
-      // save the user to local storage
-      AsyncStorage.setItem("userToken", json.token);
-
       // update the auth context
-      dispatch({ type: "LOGIN", payload: json });
-
+      dispatch({ type, payload: json });
       setIsLoading(false);
       setError(null);
     }
   };
 
-  return { login, isLoading, error };
+  return { uploadData, isLoading, error };
 };

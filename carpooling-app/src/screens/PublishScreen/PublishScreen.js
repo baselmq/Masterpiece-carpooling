@@ -47,10 +47,9 @@ const PublishScreen = () => {
       }
 
       if (response.ok) {
-        dispatch({ type: "SET_DATA", payload: json.data });
+        dispatch({ type: "SET_DATA", payload: json });
         setIsLoading(false);
         setError(null);
-        console.log(json);
       }
     };
 
@@ -61,7 +60,7 @@ const PublishScreen = () => {
 
   return isLoading ? (
     <LoadingCustom />
-  ) : data.length === 0 ? (
+  ) : data.data !== null ? (
     <SetFromLocPublish />
   ) : (
     <JoinNow />

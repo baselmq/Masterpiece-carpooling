@@ -23,7 +23,6 @@ const AppNav = () => {
         if (response.ok) {
           const json = await response.json();
           dispatch({ type: "SET_USER_DATA", payload: json });
-          // console.log(json);
         }
       } catch (error) {
         // Handle fetch errors here if needed.

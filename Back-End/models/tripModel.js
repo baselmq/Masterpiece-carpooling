@@ -42,7 +42,7 @@ const tripSchema = new Schema(
     },
     travel_distance: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { timestamps: true }
@@ -71,8 +71,7 @@ tripSchema.statics.addTrip = async function (
     !seats ||
     !origin ||
     !destination ||
-    !travel_time ||
-    !travel_distance
+    !travel_time
   ) {
     throw Error("All fields must be filled");
   }
