@@ -29,15 +29,15 @@ const tripSchema = new Schema(
       required: true,
     },
     origin: {
-      type: String,
+      type: Object,
       required: true,
     },
     destination: {
-      type: String,
+      type: Object,
       required: true,
     },
     travel_time: {
-      type: String,
+      type: Object,
       required: true,
     },
     travel_distance: {

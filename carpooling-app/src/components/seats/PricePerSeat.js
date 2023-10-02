@@ -8,7 +8,8 @@ import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import { PathIcons } from "../../utils/PathIcons";
 import BtnNext from "../buttons/BtnNext";
-import { useRegisterDriver } from "../../hooks/useRegisterDriver";
+import { useUploadData } from "../../hooks/useUploadData";
+import { useDriverCxt } from "../../hooks/useDriverCxt";
 
 const PricePerSeat = ({ navigation }) => {
   const {
@@ -21,13 +22,15 @@ const PricePerSeat = ({ navigation }) => {
     dispatch,
     price: priceCxt,
   } = usePublishContext();
+
+  const { data: dataDriver } = useDriverCxt();
   const [number, setNumber] = useState(1);
   const [price, setPrice] = useState(0);
   const { dispatch: tripsDispatch } = useTripsCxt();
   const type = "ADD_TRIPS";
   const path = "trips";
 
-  const { registerDriver, isLoading, error } = useRegisterDriver(
+  const { uploadData, isLoading, error } = useUploadData(
     tripsDispatch,
     type,
     path
@@ -81,16 +84,20 @@ const PricePerSeat = ({ navigation }) => {
 
   const handelSubmit = () => {
     data = {
+      driver_id: dataDriver.data[0]._id,
       date,
       time,
       price: priceCxt,
       seats: numberOfSeats,
-      origin,
+      origin: {
+        description: origin.description,
+        location: { lat: origin.location.lat, lng: origin.location.lng },
+      },
       destination,
       travel_time: travelTime,
     };
-    console.log(data.origin);
-    // registerDriver(data);
+    // console.log(data.origin);
+    uploadData(data);
     // navigation.navigate("Publish");
   };
 
