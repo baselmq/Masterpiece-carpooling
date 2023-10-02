@@ -7,6 +7,7 @@ const bookingRouter = require("./routes/bookingRouter");
 const driverRoutes = require("./routes/driverRoutes");
 const tripsRouter = require("./routes/tripsRouter");
 const adminRoutes = require("./routes/adminRoutes");
+const imageRoutes = require("./routes/imageRouter");
 
 require("dotenv").config();
 
@@ -18,7 +19,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
   next();
 });
 
@@ -27,6 +27,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/v1/driver", driverRoutes);
 app.use("/api/v1/trips", tripsRouter);
+app.use("/api/v1/upload", imageRoutes);
 
 app.use("/api/v1/admin", adminRoutes);
 

@@ -10,12 +10,15 @@ import { useForm } from "react-hook-form";
 import BtnOutlineCustom from "../../components/buttons/BtnOutlineCustom";
 import DropDownCustom from "../../components/select/DropDownCustom";
 import { PathIcons } from "../../utils/PathIcons";
+import { useUserContext } from "../../hooks/useUserContext";
 const HomeScreen = ({ navigation }) => {
+  const { userData } = useUserContext();
+
   const { control } = useForm({
     defaultValues: {
-      email: "basel@gmail.com",
+      email: userData.data.email,
       gender: "male",
-      phone: "+962787159816",
+      phone: userData.data.phone,
     },
   });
   return (
@@ -35,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.body}>
         <View style={{ alignItems: "center", gap: 20 }}>
           <UserImage source={PathImages.user} size={120} />
-          <Text style={styles.username}>Mohammad Omar</Text>
+          <Text style={styles.username}>{userData.data.username}</Text>
         </View>
 
         {/* ---------------- form ----------------*/}

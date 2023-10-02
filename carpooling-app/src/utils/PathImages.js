@@ -4,6 +4,7 @@ import Circle from "../assets/icons/circle.svg";
 import Onboarding1 from "../assets/images/onboarding_1.svg";
 import Onboarding2 from "../assets/images/onboarding_2.svg";
 import Onboarding3 from "../assets/images/onboarding_3.svg";
+import Publish from "../assets/images/carpool-new.svg";
 import Welcome from "../assets/images/welcome.svg";
 export class PathImages {
   // png
@@ -12,6 +13,8 @@ export class PathImages {
   // svg
   static home = (<Home />);
   static circle = (<Circle />);
+  // static publish = (<Publish width={360} height={250} />);
+  static publish = (<Publish width={350} height={350} />);
   static bgHome = (
     <BgHome
       width={391}

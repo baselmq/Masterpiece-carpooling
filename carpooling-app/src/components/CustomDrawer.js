@@ -11,16 +11,18 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathIcons } from "../utils/PathIcons";
 import { AuthCxt } from "../context/Auth";
 import { useLogout } from "../hooks/useLogout";
+import { useUserContext } from "../hooks/useUserContext";
 const CustomDrawer = (props) => {
   const { logout } = useLogout();
+  const { userData } = useUserContext();
 
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={{ padding: 20 }}>
           <Image source={PathImages.user} style={styles.userImage} />
-          <Text style={styles.username}>Basel Qarqa</Text>
-          <Text style={styles.userEmail}>basel@gmail.com</Text>
+          <Text style={styles.username}>{userData?.data?.username}</Text>
+          <Text style={styles.userEmail}>{userData?.data?.email}</Text>
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>

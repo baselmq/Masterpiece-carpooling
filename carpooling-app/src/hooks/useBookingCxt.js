@@ -6,9 +6,7 @@ export const useBookingCxt = () => {
   const context = useContext(BookingContext);
 
   if (!context) {
-    throw Error(
-      "useWorkoutsContext must be used inside an LocationContextProvider"
-    );
+    throw Error("useBookingCxt must be used inside an AuthContextProvider");
   }
 
   return context;

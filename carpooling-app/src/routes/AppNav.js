@@ -1,34 +1,55 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./AuthStack";
 import AppStack from "./DrawerNavigator";
-import { AuthCxt } from "../context/Auth";
 import LoadingCustom from "../components/Loading";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useUserContext } from "../hooks/useUserContext";
+import { PathApi } from "../utils/PathApi";
+
 const AppNav = () => {
-  // const { isLoading, userToken } = useContext(AuthCxt);
   const { user } = useAuthContext();
-  if (user !== null) {
-    return (
-      <NavigationContainer>
+  const { userData, dispatch } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getDataMe = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${PathApi.endpoint}/me`, {
+          headers: { Authorization: `Bearer ${user}` },
+        });
+
+        if (response.ok) {
+          const json = await response.json();
+          dispatch({ type: "SET_USER_DATA", payload: json });
+          console.log(json);
+        }
+      } catch (error) {
+        // Handle fetch errors here if needed.
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (user) {
+      getDataMe();
+    }
+
+    console.log("DataWrapper");
+  }, [user, dispatch]);
+
+  return (
+    <NavigationContainer>
+      {isLoading ? (
+        <LoadingCustom />
+      ) : user !== null ? (
         <AppStack />
-      </NavigationContainer>
-    );
-  } else {
-    return (
-      <NavigationContainer>
+      ) : (
         <AuthStack />
-      </NavigationContainer>
-    );
-  }
-  // return (
-  //   <NavigationContainer>
-  //     {user !== null ? <AppStack /> : <AuthStack />}
-  //   </NavigationContainer>
-  // );
+      )}
+    </NavigationContainer>
+  );
 };
 
 export default AppNav;
-
-const styles = StyleSheet.create({});

@@ -6,9 +6,7 @@ export const usePublishContext = () => {
   const context = useContext(PublishCxt);
 
   if (!context) {
-    throw Error(
-      "useWorkoutsContext must be used inside an LocationContextProvider"
-    );
+    throw Error("usePublishContext must be used inside an AuthContextProvider");
   }
 
   return context;

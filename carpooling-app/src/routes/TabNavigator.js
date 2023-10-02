@@ -15,6 +15,7 @@ const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: PathColor.primary[500],
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen

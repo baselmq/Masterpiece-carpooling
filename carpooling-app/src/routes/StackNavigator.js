@@ -24,6 +24,9 @@ import NumberOfSeats, {
 } from "../components/seats/NumberOfSeats";
 import TimeCustom from "../components/date_time/TimeCustom";
 import PricePerSeat from "../components/seats/PricePerSeat";
+import DataWrapper from "../screens/Wrapper/DataWrapper";
+import FormDriver from "../screens/PublishScreen/components/FormDriver";
+import FormCar from "../screens/PublishScreen/components/FormCar";
 
 const Stack = createNativeStackNavigator();
 const screenOptionStyle = {
@@ -37,6 +40,7 @@ const screenOptionStyle = {
 export const MainStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
+      {/* <Stack.Screen name="DataWrapper" component={DataWrapper} /> */}
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SearchLocation" component={SearchLocation} />
       <Stack.Screen name="Search" component={SearchScreen} />
@@ -60,6 +64,8 @@ export const PublishStackNavigator = () => {
       <Stack.Screen name="CalendarPublish" component={CalendarPublish} />
       <Stack.Screen name="TimeCustom" component={TimeCustom} />
       <Stack.Screen name="PricePerSeat" component={PricePerSeat} />
+      <Stack.Screen name="FormDriver" component={FormDriver} />
+      <Stack.Screen name="FormCar" component={FormCar} />
       <Stack.Screen
         name="NumberOfSeatsPublish"
         component={NumberOfSeatsPublish}
