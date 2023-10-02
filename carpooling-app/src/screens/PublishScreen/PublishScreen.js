@@ -21,7 +21,6 @@ const PublishScreen = () => {
   const dateNow = checkDateformat(Date());
   const { user } = useAuthContext();
   const { data, dispatch } = useDriverCxt();
-  console.log(data);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
@@ -36,7 +35,7 @@ const PublishScreen = () => {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`${PathApi.endpoint}/driver/8`, {
+      const response = await fetch(`${PathApi.endpoint}/driver/me`, {
         headers: { Authorization: `Bearer ${user}` },
       });
 
@@ -48,9 +47,10 @@ const PublishScreen = () => {
       }
 
       if (response.ok) {
-        dispatch({ type: "SET_DATA", payload: json });
+        dispatch({ type: "SET_DATA", payload: json.data });
         setIsLoading(false);
         setError(null);
+        console.log(json);
       }
     };
 
@@ -61,7 +61,7 @@ const PublishScreen = () => {
 
   return isLoading ? (
     <LoadingCustom />
-  ) : data !== null ? (
+  ) : data.length === 0 ? (
     <SetFromLocPublish />
   ) : (
     <JoinNow />

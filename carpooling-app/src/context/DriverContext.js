@@ -6,6 +6,7 @@ export const locationReducer = (state, action) => {
   switch (action.type) {
     case "SET_DATA":
       return {
+        ...state,
         data: action.payload,
       };
     case "DELETE_DATA":

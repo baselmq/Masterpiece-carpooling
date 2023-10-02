@@ -20,6 +20,14 @@ exports.getMeDriver = async (req, res) => {
 
   try {
     const driver = await Driver.find({ user_id });
+
+    if (driver.length === 0) {
+      // If no data found, return null
+      return res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    }
     res.status(200).json({
       status: "success",
       data: driver,
