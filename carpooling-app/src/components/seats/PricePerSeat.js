@@ -89,10 +89,7 @@ const PricePerSeat = ({ navigation }) => {
       time,
       price: priceCxt,
       seats: numberOfSeats,
-      origin: {
-        description: origin.description,
-        location: { lat: origin.location.lat, lng: origin.location.lng },
-      },
+      origin,
       destination,
       travel_time: travelTime,
     };

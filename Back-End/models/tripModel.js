@@ -40,10 +40,6 @@ const tripSchema = new Schema(
       type: Object,
       required: true,
     },
-    travel_distance: {
-      type: String,
-      // required: true,
-    },
   },
   { timestamps: true }
 );
@@ -58,8 +54,7 @@ tripSchema.statics.addTrip = async function (
   seats,
   origin,
   destination,
-  travel_time,
-  travel_distance
+  travel_time
 ) {
   // Validation
   if (
@@ -94,7 +89,6 @@ tripSchema.statics.addTrip = async function (
     origin,
     destination,
     travel_time,
-    travel_distance,
   });
 
   return trip;

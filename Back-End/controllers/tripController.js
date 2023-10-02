@@ -28,7 +28,6 @@ exports.createTrip = async (req, res) => {
     origin,
     destination,
     travel_time,
-    travel_distance,
   } = req.body;
 
   try {
@@ -41,8 +40,7 @@ exports.createTrip = async (req, res) => {
       seats,
       origin,
       destination,
-      travel_time,
-      travel_distance
+      travel_time
     );
     res.status(200).json({
       status: "success",
