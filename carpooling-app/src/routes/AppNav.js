@@ -16,14 +16,14 @@ const AppNav = () => {
     const getDataMe = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${PathApi.endpoint}/me`, {
+        const response = await fetch(`${PathApi.endpoint}/user/me`, {
           headers: { Authorization: `Bearer ${user}` },
         });
 
         if (response.ok) {
           const json = await response.json();
           dispatch({ type: "SET_USER_DATA", payload: json });
-          console.log(json);
+          // console.log(json);
         }
       } catch (error) {
         // Handle fetch errors here if needed.
@@ -35,8 +35,6 @@ const AppNav = () => {
     if (user) {
       getDataMe();
     }
-
-    console.log("DataWrapper");
   }, [user, dispatch]);
 
   return (

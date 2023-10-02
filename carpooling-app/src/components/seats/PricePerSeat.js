@@ -31,7 +31,7 @@ const PricePerSeat = ({ navigation }) => {
 
   function roundToTwoDecimalPlaces(num) {
     var number = parseFloat(num.match(/\d+\.\d+/)[0]);
-    console.log(parseFloat(number.toFixed(2)));
+    // console.log(parseFloat(number.toFixed(2)));
     var roundedNumber = Math.round(parseFloat(number.toFixed(2)));
     if (roundedNumber < 1) {
       setPrice(1);

@@ -9,16 +9,19 @@ import { PathFonts, PathFontsSize } from "../../../utils/PathFonts";
 import { useLogin } from "../../../hooks/useLogin";
 import { AuthRules } from "../../../utils/AuthRules";
 import HeaderScreens from "../../../components/header/HeaderScreens";
+import { useRegisterDriver } from "../../../hooks/useRegisterDriver";
 
 const FormCar = ({ route, navigation }) => {
-  const [showPassword, setShowPassword] = React.useState(false);
   const { control, handleSubmit } = useForm();
   const { dataDriver } = route.params;
 
-  const { login, error, isLoading } = useLogin();
+  const { registerDriver, error, isLoading } = useRegisterDriver();
 
   const onSubmit = async (data) => {
-    await login(data.phone, data.password);
+    console.log(dataDriver);
+    console.log("-----------");
+    console.log(data);
+    // await registerDriver(data);
   };
 
   return (

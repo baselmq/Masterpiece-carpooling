@@ -8,17 +8,15 @@ const DataWrapper = ({ navigation }) => {
   const { user } = useAuthContext();
   const { userData, dispatch } = useUserContext();
 
-  console.log(user);
   useEffect(() => {
     const getDataMe = async () => {
-      const response = await fetch(`${PathApi.endpoint}/me`, {
+      const response = await fetch(`${PathApi.endpoint}/user/me`, {
         headers: { Authorization: `Bearer ${user}` },
       });
       const json = await response.json();
 
       if (response.ok) {
         dispatch({ type: "SET_USER_DATA", payload: json });
-        console.log(json.data);
         navigation.replace("Home");
       }
     };

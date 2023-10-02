@@ -61,8 +61,8 @@ const CalendarCustom = ({ navigation, dispatch, date, next }) => {
       </View>
       <BtnNext
         onPress={() => {
-          console.log(dateToUserInterface(selected));
-          console.log(selected);
+          // console.log(dateToUserInterface(selected));
+          // console.log(selected);
           dispatch({
             type: "SET_DATE",
             payload: selected,

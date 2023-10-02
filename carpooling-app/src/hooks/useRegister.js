@@ -18,7 +18,7 @@ export const useRegister = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${PathApi.endpoint}/register`, {
+    const response = await fetch(`${PathApi.endpoint}/user/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(finalData),

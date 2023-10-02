@@ -12,6 +12,7 @@ import AppNav from "./src/routes/AppNav";
 import { BookingContextProvider } from "./src/context/BookingContext";
 import { PublishContextProvider } from "./src/context/PublishContext";
 import { UserContextProvider } from "./src/context/UserContext";
+import { DriverContextProvider } from "./src/context/DriverContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -44,12 +45,14 @@ export default function App() {
     <AuthContextProvider>
       <UserContextProvider>
         <PublishContextProvider>
-          <BookingContextProvider>
-            <SafeAreaView style={styles.container}>
-              <AppNav />
-              <StatusBar style="auto" />
-            </SafeAreaView>
-          </BookingContextProvider>
+          <DriverContextProvider>
+            <BookingContextProvider>
+              <SafeAreaView style={styles.container}>
+                <AppNav />
+                <StatusBar style="auto" />
+              </SafeAreaView>
+            </BookingContextProvider>
+          </DriverContextProvider>
         </PublishContextProvider>
       </UserContextProvider>
     </AuthContextProvider>

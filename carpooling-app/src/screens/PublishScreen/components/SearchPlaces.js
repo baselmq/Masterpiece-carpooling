@@ -41,7 +41,7 @@ const SearchPlaces = ({ type, dispatch, next }) => {
       longitude: location.coords.longitude,
       latitude: location.coords.latitude,
     });
-    console.log(reverseGeocodeAddress);
+    // console.log(reverseGeocodeAddress);
     dispatch({
       type: actionType,
       payload: {
@@ -53,7 +53,7 @@ const SearchPlaces = ({ type, dispatch, next }) => {
       },
     });
     navigation.navigate(next);
-    console.log(location.coords.latitude, location.coords.longitude);
+    // console.log(location.coords.latitude, location.coords.longitude);
   };
 
   // -------------------------------------------

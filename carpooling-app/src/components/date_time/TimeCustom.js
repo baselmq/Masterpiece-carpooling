@@ -67,7 +67,7 @@ const TimeCustom = ({ navigation }) => {
       </TouchableOpacity>
       <BtnNext
         onPress={() => {
-          console.log(formattedTime);
+          // console.log(formattedTime);
           dispatch({
             type: "SET_TIME",
             payload: formattedTime,

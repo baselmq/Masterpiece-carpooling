@@ -28,7 +28,6 @@ const RegisterScreen = ({ navigation }) => {
 
   const onSubmit = async (data) => {
     await register(data);
-    console.log(data);
   };
   const rules = {
     confirmPassword: {

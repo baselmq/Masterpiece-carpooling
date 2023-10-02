@@ -20,9 +20,21 @@ const driverSchema = new Schema(
       type: String,
       required: true,
     },
+    driver_address: {
+      type: String,
+      required: true,
+    },
+    driver_occupation: {
+      type: String,
+      required: true,
+    },
+    driver_workplace: {
+      type: String,
+      required: true,
+    },
     verified: {
       type: String,
-      //   required: true,
+      required: true,
     },
   },
   { timestamps: true }
@@ -34,10 +46,22 @@ driverSchema.statics.addDriver = async function (
   car_model,
   car_number,
   car_color,
-  verified = "No Verified"
+  driver_address,
+  driver_occupation,
+  driver_workplace,
+  verified
 ) {
   //validation
-  if (!user_id || !car_model || !car_number || !car_color || !verified) {
+  if (
+    !user_id ||
+    !car_model ||
+    !car_number ||
+    !car_color ||
+    !verified ||
+    !driver_address ||
+    !driver_occupation ||
+    !driver_workplace
+  ) {
     throw Error("All fields must be filled");
   }
 
@@ -52,6 +76,9 @@ driverSchema.statics.addDriver = async function (
     car_model,
     car_number,
     car_color,
+    driver_address,
+    driver_occupation,
+    driver_workplace,
     verified,
   });
 

@@ -1,3 +1,3 @@
 export class PathApi {
-  static endpoint = "https://backend-carpooling.onrender.com/api/v1/user";
+  static endpoint = "https://backend-carpooling.onrender.com/api/v1";
 }
