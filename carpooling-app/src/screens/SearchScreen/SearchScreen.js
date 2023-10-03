@@ -46,7 +46,6 @@ const SearchScreen = () => {
 
         const json = await response.json();
         setDataSearch(json.data);
-        console.log(json);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -87,7 +86,7 @@ const SearchScreen = () => {
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id}
           contentContainerStyle={styles.flatListContent}
         />
       ) : (

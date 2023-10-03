@@ -12,7 +12,7 @@ const CardResult = (props) => {
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View style={{ gap: 30 }}>
-            <Text style={styles.text}>{props.leavingTime}</Text>
+            <Text style={styles.text}>{props.time}</Text>
             <Text style={styles.text}>{props.goingTime}</Text>
           </View>
           <View style={{ gap: 30, position: "relative" }}>
@@ -21,11 +21,11 @@ const CardResult = (props) => {
             <View style={styles.dotLine} />
           </View>
           <View style={{ gap: 30 }}>
-            <Text style={styles.text}>{props.leavingFrom}</Text>
-            <Text style={styles.text}>{props.goingTo}</Text>
+            <Text style={styles.text}>{props.origin.description}</Text>
+            <Text style={styles.text}>{props.destination.description}</Text>
           </View>
         </View>
-        <Text style={styles.price}>{props.price}</Text>
+        <Text style={styles.price}>{props.price} JOD</Text>
       </View>
 
       {/* bottom */}

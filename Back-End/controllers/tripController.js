@@ -1,5 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const Trip = require("../models/tripModel");
+const User = require("../models/userModel");
+const Driver = require("../models/driverModel");
 
 // ----------------- get All Trips -----------------
 exports.getAllTrips = async (req, res) => {
@@ -20,11 +22,32 @@ exports.searchTrips = async (req, res) => {
   const { date, origin, destination } = req.query;
 
   try {
-    const results = await Trip.find({
+    const trip = await Trip.find({
       "destination.description": destination,
       "origin.description": origin,
       date,
-    });
+    }).select(" -updatedAt -createdAt -__v");
+    const results = await Promise.all(
+      trip.map(async (res) => {
+        try {
+          const user = await User.findById(res.user_id).select(
+            "-_id -updatedAt -createdAt -__v"
+          );
+          const driver = await Driver.findById(res.driver_id).select(
+            "-_id -updatedAt -createdAt -__v"
+          );
+          const data = {
+            ...res.toObject(),
+            ...user.toObject(),
+            ...driver.toObject(),
+          };
+          return data;
+        } catch (error) {
+          console.error(`Error processing element: ${res}`, error);
+          throw error; // Re-throw the error to handle it later if needed
+        }
+      })
+    );
 
     return res.status(200).json({
       status: "success",
