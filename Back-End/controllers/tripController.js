@@ -20,30 +20,33 @@ exports.getAllTrips = async (req, res) => {
 
 exports.searchTrips = async (req, res) => {
   const { date, origin, destination } = req.query;
+  const user_id = req.user._id;
 
   try {
-    const trip = await Trip.find({
+    const trips = await Trip.find({
       "destination.description": destination,
       "origin.description": origin,
       date,
-    }).select(" -updatedAt -createdAt -__v");
+      user_id: { $ne: user_id }, // Exclude trips of the same user
+    }).select("-updatedAt -createdAt -__v");
+
     const results = await Promise.all(
-      trip.map(async (res) => {
+      trips.map(async (trip) => {
         try {
-          const user = await User.findById(res.user_id).select(
+          const user = await User.findById(trip.user_id).select(
             "-_id -updatedAt -createdAt -__v"
           );
-          const driver = await Driver.findById(res.driver_id).select(
+          const driver = await Driver.findById(trip.driver_id).select(
             "-_id -updatedAt -createdAt -__v"
           );
           const data = {
-            ...res.toObject(),
+            ...trip.toObject(),
             ...user.toObject(),
             ...driver.toObject(),
           };
           return data;
         } catch (error) {
-          console.error(`Error processing element: ${res}`, error);
+          console.error(`Error processing element: ${trip}`, error);
           throw error; // Re-throw the error to handle it later if needed
         }
       })

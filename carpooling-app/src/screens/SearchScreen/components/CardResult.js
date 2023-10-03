@@ -4,8 +4,11 @@ import { PathColor } from "../../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../../utils/PathFonts";
 import UserImage from "../../../components/UserImage";
 import { PathImages } from "../../../utils/PathImages";
-
+import { sumTime } from "../../../components/sumTime.js";
 const CardResult = (props) => {
+  const timeTrip = sumTime(props.time, props.travel_time.duration.text);
+  const indexOfColor = PathColor.colorsCarNames.indexOf(props.car_color);
+  const colorCar = PathColor.colorsCar[indexOfColor];
   return (
     <View style={[styles.container, styles.shadowProp]}>
       {/* top */}
@@ -13,7 +16,7 @@ const CardResult = (props) => {
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View style={{ gap: 30 }}>
             <Text style={styles.text}>{props.time}</Text>
-            <Text style={styles.text}>{props.goingTime}</Text>
+            <Text style={styles.text}>{timeTrip}</Text>
           </View>
           <View style={{ gap: 30, position: "relative" }}>
             <Text style={styles.line} />
@@ -33,16 +36,16 @@ const CardResult = (props) => {
         <View style={{ flexDirection: "row", gap: 15 }}>
           <UserImage source={PathImages.user} size={50} />
           <View>
-            <Text style={styles.text}>{props.driverName}</Text>
-            <Text style={styles.text}>{props.rating}</Text>
+            <Text style={styles.text}>{props.username}</Text>
+            <Text style={styles.text}>{"rating"}</Text>
           </View>
         </View>
         <View>
           <View style={styles.carColor}>
-            <Text style={styles.text}>{props.carType}</Text>
-            <View style={[styles.dots, { backgroundColor: props.carColor }]} />
+            <Text style={styles.text}>{props.car_model}</Text>
+            <View style={[styles.dots, { backgroundColor: colorCar }]} />
           </View>
-          <Text style={styles.text}>{props.carNumber}</Text>
+          <Text style={styles.text}>{props.car_number}</Text>
         </View>
       </View>
     </View>

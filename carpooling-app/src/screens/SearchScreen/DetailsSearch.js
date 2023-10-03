@@ -8,11 +8,15 @@ import UserImage from "../../components/UserImage";
 import { PathImages } from "../../utils/PathImages";
 import BtnCustom from "../../components/buttons/BtnCustom";
 import CustomDivider from "../../components/CustomDivider";
+import { dateToUserInterface } from "../../components/date_time/CalendarCustom";
+import { sumTime } from "../../components/sumTime";
 
 const DetailsSearch = ({ navigation }) => {
   const route = useRoute();
   const item = route.params.selectedItem;
-
+  const timeTrip = sumTime(item.time, item.travel_time.duration.text);
+  const indexOfColor = PathColor.colorsCarNames.indexOf(item.car_color);
+  const colorCar = PathColor.colorsCar[indexOfColor];
   const RenderHeader = () => (
     <View style={styles.header}>
       <TouchableOpacity
@@ -43,28 +47,46 @@ const DetailsSearch = ({ navigation }) => {
     <View style={styles.container}>
       <RenderHeader />
       <View style={styles.infoRow}>
-        <Text style={styles.texts20}>{item.date}</Text>
-        <Text style={[styles.texts20, styles.price]}>{item.price} JD</Text>
+        <Text style={styles.texts20}>{dateToUserInterface(item.date)}</Text>
+        <Text style={[styles.texts20, styles.price]}>{item.price} JOD</Text>
       </View>
       <View style={styles.infoCard}>
         <Text style={styles.line} />
-        <RenderInfo
-          time={item.leavingTime}
-          location={item.leavingFrom}
-          city={"amman"}
-        />
-        <RenderInfo
-          time={item.goingTime}
-          location={item.goingTo}
-          city={"amman"}
-        />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("MapBooking", {
+              loc: item.origin,
+            })
+          }
+        >
+          <RenderInfo
+            time={item.time}
+            location={item.origin.description}
+            city={""}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("MapBooking", {
+              loc: item.destination,
+            })
+          }
+        >
+          <RenderInfo
+            time={timeTrip}
+            location={item.destination.description}
+            city={""}
+          />
+        </TouchableOpacity>
       </View>
       <CustomDivider />
       <View style={styles.driverInfo}>
         <View style={{ gap: 10 }}>
-          <Text style={styles.texts18}>{item.driverName}</Text>
+          <Text style={styles.texts18}>{item.username}</Text>
           <View style={{ flexDirection: "row", gap: 10 }}>
-            <Text style={styles.texts16}>{item.rating}</Text>
+            {/* <Text style={styles.texts16}>{item.rating}</Text> */}
+            <Text style={styles.texts16}>{4.5}</Text>
             <Text style={styles.texts16}>(100 rate)</Text>
           </View>
         </View>
@@ -75,15 +97,15 @@ const DetailsSearch = ({ navigation }) => {
       <View style={styles.carInfo}>
         <View style={styles.carItem}>
           <Text style={styles.texts16}>Model</Text>
-          <Text style={styles.texts16}>{item.carType}</Text>
+          <Text style={styles.texts16}>{item.car_model}</Text>
         </View>
         <View style={styles.carItem}>
           <Text style={styles.texts16}>Number</Text>
-          <Text style={styles.texts16}>{item.carNumber}</Text>
+          <Text style={styles.texts16}>{item.car_number}</Text>
         </View>
         <View style={styles.carItem}>
           <Text style={styles.texts16}>Color</Text>
-          <View style={[styles.colorCar, { backgroundColor: item.carColor }]} />
+          <View style={[styles.colorCar, { backgroundColor: colorCar }]} />
         </View>
       </View>
 

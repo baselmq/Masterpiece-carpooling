@@ -28,6 +28,7 @@ import DataWrapper from "../screens/Wrapper/DataWrapper";
 import FormDriver from "../screens/PublishScreen/components/FormDriver";
 import FormCar from "../screens/PublishScreen/components/FormCar";
 import SubmitTrips from "../screens/PublishScreen/components/SubmitTrips";
+import MapBooking from "../components/MapBooking";
 
 const Stack = createNativeStackNavigator();
 const screenOptionStyle = {
@@ -51,6 +52,7 @@ export const MainStackNavigator = () => {
       <Stack.Screen name="SetToLocHome" component={SetToLocHome} />
       <Stack.Screen name="CalendarHome" component={CalendarHome} />
       <Stack.Screen name="NumberOfSeatsHome" component={NumberOfSeatsHome} />
+      <Stack.Screen name="MapBooking" component={MapBooking} />
     </Stack.Navigator>
   );
 };

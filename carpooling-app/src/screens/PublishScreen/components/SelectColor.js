@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Alert,
   Modal,
@@ -10,96 +10,102 @@ import {
 import BtnCustom from "../../../components/buttons/BtnCustom";
 import { PathFonts, PathFontsSize } from "../../../utils/PathFonts";
 import { PathColor } from "../../../utils/PathColor";
-
-const colors = [
-  "#6874e7",
-  "#b8304f",
-  "#758E4F",
-  "#fa3741",
-  "#F26419",
-  "#F6AE2D",
-  "#7A93AC",
-  "#33658A",
-  "#42273B",
-  "#171A21",
-  "#008080",
-  "#000080",
-  "#EAEAEA",
-  "#C0C0C0",
-  "#808080",
-];
+import { useColorCxt } from "../../../hooks/useColorCxt";
 
 const CIRCLE_SIZE = 40;
 const CIRCLE_RING_SIZE = 2;
 
 const AlertColor = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [value, setValue] = useState(0);
+  const { value, dispatch, visible } = useColorCxt();
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View>
-              <View style={styles.sheetHeader}>
-                <Text style={styles.sheetHeaderTitle}>Select Car color</Text>
-              </View>
-              <View style={styles.sheetBody}>
-                <View style={styles.group}>
-                  {colors.map((item, index) => {
-                    const isActive = value === index;
-                    return (
-                      <View key={item}>
-                        <TouchableWithoutFeedback
-                          onPress={() => setValue(index)}
-                        >
-                          <View
-                            style={[
-                              styles.circle,
-                              isActive && { borderColor: item },
-                            ]}
+    <View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            dispatch({
+              type: "SET_VISIBLE",
+              payload: false,
+            });
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View>
+                <View style={styles.sheetHeader}>
+                  <Text style={styles.sheetHeaderTitle}>Select Car color</Text>
+                </View>
+                <View style={styles.sheetBody}>
+                  <View style={styles.group}>
+                    {PathColor.colorsCar.map((item, index) => {
+                      const isActive = value === index;
+                      return (
+                        <View key={item}>
+                          <TouchableWithoutFeedback
+                            onPress={() => {
+                              dispatch({
+                                type: "SET_VALUE",
+                                payload: index,
+                              });
+                            }}
                           >
                             <View
                               style={[
-                                styles.circleInside,
-                                { backgroundColor: item },
+                                styles.circle,
+                                isActive && { borderColor: item },
                               ]}
-                            />
-                          </View>
-                        </TouchableWithoutFeedback>
-                      </View>
-                    );
-                  })}
+                            >
+                              <View
+                                style={[
+                                  styles.circleInside,
+                                  { backgroundColor: item },
+                                ]}
+                              />
+                            </View>
+                          </TouchableWithoutFeedback>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <BtnCustom
+                    title={"Confirm"}
+                    onPress={() => {
+                      dispatch({
+                        type: "SET_VISIBLE",
+                        payload: false,
+                      });
+                    }}
+                  />
                 </View>
-                <BtnCustom
-                  title={"Confirm"}
-                  onPress={() => setModalVisible(!modalVisible)}
-                />
               </View>
             </View>
           </View>
-        </View>
-      </Modal>
-      <BtnCustom title={"Show"} onPress={() => setModalVisible(true)} />
+        </Modal>
+      </View>
+      {/* <InputCustom
+        onPressIn={() =>
+          dispatch({
+            type: "SET_VISIBLE",
+            payload: true,
+          })
+        }
+        control={control}
+        name="car_color"
+        label="Color Car"
+        rules={AuthRules.name}
+      /> */}
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
   },
   modalView: {
     margin: 20,

@@ -86,7 +86,7 @@ const SearchScreen = () => {
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           contentContainerStyle={styles.flatListContent}
         />
       ) : (

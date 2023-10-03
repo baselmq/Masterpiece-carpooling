@@ -14,6 +14,8 @@ const InputCustom = ({
   secureTextEntry,
   right,
   keyboardType,
+  onPressIn,
+  onFocus,
 }) => {
   return (
     <Controller
@@ -23,6 +25,8 @@ const InputCustom = ({
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <View>
           <TextInput
+            onPressIn={onPressIn}
+            onFocus={onFocus}
             label={label}
             value={value}
             onChangeText={onChange}

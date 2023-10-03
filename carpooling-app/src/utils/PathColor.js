@@ -38,4 +38,39 @@ export class PathColor {
     100: "#ffcdd2",
     50: "#ffebee",
   };
+
+  static colorsCarNames = [
+    "Blue",
+    "Red",
+    "Green",
+    "Crimson",
+    "Orange",
+    "Gold",
+    "Slate Gray",
+    "Navy Blue",
+    "Dark Purple",
+    "Black",
+    "Teal",
+    "Navy",
+    "Light Gray",
+    "Silver",
+    "Gray",
+  ];
+  static colorsCar = [
+    "#6874e7",
+    "#b8304f",
+    "#758E4F",
+    "#fa3741",
+    "#F26419",
+    "#F6AE2D",
+    "#7A93AC",
+    "#33658A",
+    "#42273B",
+    "#171A21",
+    "#008080",
+    "#000080",
+    "#EAEAEA",
+    "#C0C0C0",
+    "#808080",
+  ];
 }

@@ -14,6 +14,7 @@ import { PublishContextProvider } from "./src/context/PublishContext";
 import { UserContextProvider } from "./src/context/UserContext";
 import { DriverContextProvider } from "./src/context/DriverContext";
 import { TripsContextProvider } from "./src/context/TripsContext";
+import { ColorContextProvider } from "./src/context/ColorContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,10 +50,12 @@ export default function App() {
           <DriverContextProvider>
             <TripsContextProvider>
               <BookingContextProvider>
-                <SafeAreaView style={styles.container}>
-                  <AppNav />
-                  <StatusBar style="auto" />
-                </SafeAreaView>
+                <ColorContextProvider>
+                  <SafeAreaView style={styles.container}>
+                    <AppNav />
+                    <StatusBar style="auto" />
+                  </SafeAreaView>
+                </ColorContextProvider>
               </BookingContextProvider>
             </TripsContextProvider>
           </DriverContextProvider>
