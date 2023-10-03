@@ -51,14 +51,14 @@ export default function App() {
           <DriverContextProvider>
             <TripsContextProvider>
               <BookingContextProvider>
-                <ColorContextProvider>
-                  <UserBookingContextProvider>
+                <UserBookingContextProvider>
+                  <ColorContextProvider>
                     <SafeAreaView style={styles.container}>
                       <AppNav />
                       <StatusBar style="auto" />
                     </SafeAreaView>
-                  </UserBookingContextProvider>
-                </ColorContextProvider>
+                  </ColorContextProvider>
+                </UserBookingContextProvider>
               </BookingContextProvider>
             </TripsContextProvider>
           </DriverContextProvider>

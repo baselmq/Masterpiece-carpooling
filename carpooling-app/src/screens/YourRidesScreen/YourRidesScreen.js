@@ -20,53 +20,47 @@ import BtnOutlineCustom from "../../components/buttons/BtnOutlineCustom";
 
 const YourRidesScreen = ({ navigation }) => {
   const { user } = useAuthContext();
-  const { origin, destination, date } = useBookingCxt();
-  const { booking, dispatch } = useUserBookingCxt();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const [dataSearch, setDataSearch] = useState([]);
-
-  const fetchBookingData = async (dispatch) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`${PathApi.endpoint}/booking/me`, {
-        headers: {
-          Authorization: `Bearer ${user}`,
-        },
-      });
-
-      if (response.ok) {
-        const bookingData = await response.json();
-        dispatch({ type: "ADD_BOOKING", payload: bookingData.data });
-      }
-
-      if (!response.ok) {
-        throw new Error("Error fetching data");
-      }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [dataBooking, setDataBooking] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      fetchBookingData(dispatch);
-    }
-  }, [booking]);
+    const searchTrip = async () => {
+      setIsLoading(true);
+      setError(null);
 
+      try {
+        const response = await fetch(`${PathApi.endpoint}/booking/me`, {
+          headers: {
+            Authorization: `Bearer ${user}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Error fetching data");
+        }
+
+        const json = await response.json();
+        setDataBooking(json.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    searchTrip();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.drawer}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.openDrawer()}
         >
-          {PathIcons.leftArrow}
+          {PathIcons.menu}
         </TouchableOpacity>
         <Text style={styles.title}>Your Rides</Text>
       </View>
@@ -74,20 +68,14 @@ const YourRidesScreen = ({ navigation }) => {
         <LoadingCustom />
       ) : error ? ( // Display error message if an error occurred
         <Text style={styles.errorText}>{error}</Text>
-      ) : booking && booking.length > 0 ? (
+      ) : dataBooking && dataBooking.length > 0 ? (
         <FlatList
-          data={booking}
+          data={dataBooking}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("DetailsSearch", { selectedItem: item });
-              }}
-            >
-              <View style={styles.cardContainer}>
-                <CardResult {...item} />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.cardContainer}>
+              <CardResult {...item} />
+            </View>
           )}
           keyExtractor={(item) => item._id}
           contentContainerStyle={styles.flatListContent}

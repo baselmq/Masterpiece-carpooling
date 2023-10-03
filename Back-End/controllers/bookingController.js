@@ -1,6 +1,8 @@
 const Booking = require("../models/bookingModel");
 const Trip = require("../models/tripModel");
 const Driver = require("../models/driverModel");
+const User = require("../models/userModel");
+
 // ----------------- get All Booking -----------------
 exports.getAllBooking = async (req, res) => {
   const user_id = req.user._id;
@@ -40,11 +42,17 @@ exports.getMeBooking = async (req, res) => {
           const driver = await Driver.findById(booking.driver_id).select(
             "-_id -updatedAt -createdAt -__v -verified -driver_address -driver_occupation -driver_workplace"
           );
+          const driverId = await Driver.findById(booking.driver_id);
 
+          const userDriver = await User.findById(driverId.user_id).select(
+            "-_id -updatedAt -createdAt -__v"
+          );
+          console.log(userDriver);
           const data = {
             ...booking.toObject(),
             ...trip.toObject(),
             ...driver.toObject(),
+            ...userDriver.toObject(),
           };
           return data;
         } catch (error) {
