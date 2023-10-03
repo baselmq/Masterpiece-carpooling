@@ -29,7 +29,7 @@ export const useUploadData = (dispatch, type, path) => {
 
     if (response.ok) {
       // update the auth context
-      dispatch({ type, payload: json });
+      dispatch({ type, payload: json.data });
       setIsLoading(false);
       setError(null);
     }

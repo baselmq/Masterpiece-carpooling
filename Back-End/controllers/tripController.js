@@ -13,6 +13,23 @@ exports.getAllTrips = async (req, res) => {
   } catch (error) {
     res.status(404).json({ status: "fail", message: error.message });
   }
+  s;
+};
+
+exports.searchTrips = async (req, res) => {
+  const { date, origin, destination } = req.query;
+
+  try {
+    const results = await Trip.find({
+      "destination.description": destination,
+      "origin.description": origin,
+      date,
+    });
+
+    return res.status(200).json(results);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
 
 //createTrip

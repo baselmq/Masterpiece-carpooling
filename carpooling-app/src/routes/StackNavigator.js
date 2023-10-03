@@ -27,6 +27,7 @@ import PricePerSeat from "../components/seats/PricePerSeat";
 import DataWrapper from "../screens/Wrapper/DataWrapper";
 import FormDriver from "../screens/PublishScreen/components/FormDriver";
 import FormCar from "../screens/PublishScreen/components/FormCar";
+import SubmitTrips from "../screens/PublishScreen/components/SubmitTrips";
 
 const Stack = createNativeStackNavigator();
 const screenOptionStyle = {
@@ -66,6 +67,7 @@ export const PublishStackNavigator = () => {
       <Stack.Screen name="PricePerSeat" component={PricePerSeat} />
       <Stack.Screen name="FormDriver" component={FormDriver} />
       <Stack.Screen name="FormCar" component={FormCar} />
+      <Stack.Screen name="SubmitTrips" component={SubmitTrips} />
       <Stack.Screen
         name="NumberOfSeatsPublish"
         component={NumberOfSeatsPublish}

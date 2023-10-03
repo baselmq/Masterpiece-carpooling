@@ -13,6 +13,7 @@ router
   .get(tripController.getAllTrips)
   .post(tripController.createTrip);
 
+router.route("/search").get(tripController.searchTrips);
 router
   .route("/:id")
   .get(tripController.getTrip)

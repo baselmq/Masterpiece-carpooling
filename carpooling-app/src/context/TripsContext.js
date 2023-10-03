@@ -10,7 +10,7 @@ export const tripsReducer = (state, action) => {
       };
     case "ADD_TRIPS":
       return {
-        trips: [action.payload, ...state.posts],
+        trips: [action.payload, ...state.trips],
       };
     case "DELETE_TRIPS":
       return {
