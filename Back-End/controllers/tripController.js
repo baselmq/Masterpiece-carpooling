@@ -26,9 +26,12 @@ exports.searchTrips = async (req, res) => {
       date,
     });
 
-    return res.status(200).json(results);
+    return res.status(200).json({
+      status: "success",
+      data: results,
+    });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(404).json({ status: "fail", message: error.message });
   }
 };
 

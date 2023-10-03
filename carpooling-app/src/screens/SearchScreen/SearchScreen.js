@@ -1,46 +1,62 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import CardResult from "./components/CardResult";
-import { PathColor } from "../../utils/PathColor";
-import { FlatList } from "react-native-gesture-handler";
-import { ridesData } from "../../data/FakeData";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator, // Import the ActivityIndicator component
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { PathIcons } from "../../utils/PathIcons";
-import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { PathApi } from "../../utils/PathApi";
+import { useBookingCxt } from "../../hooks/useBookingCxt";
+import CardResult from "./components/CardResult";
+import { PathColor } from "../../utils/PathColor";
+import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = () => {
+  const navigation = useNavigation();
   const { user } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const { origin, destination, date } = useBookingCxt();
+
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataSearch, setDataSearch] = useState([]);
   useEffect(() => {
-    const getDriver = async () => {
+    const searchTrip = async () => {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`${PathApi.endpoint}/trips`, {
-        headers: { Authorization: `Bearer ${user}` },
-      });
+      try {
+        const response = await fetch(
+          `${PathApi.endpoint}/trips/search?date=${date}&origin=${origin.description}&destination=${destination.description}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      const json = await response.json();
+        if (!response.ok) {
+          throw new Error("Error fetching data");
+        }
 
-      if (!response.ok) {
+        const json = await response.json();
+        setDataSearch(json.data);
+        console.log(json);
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setIsLoading(false);
-        setError(json.error);
-      }
-
-      if (response.ok) {
-        dispatch({ type: "SET_DATA", payload: json.data });
-        setIsLoading(false);
-        setError(null);
       }
     };
 
-    if (user) {
-      getDriver();
-    }
-  }, [user, dispatch, setIsLoading, setError]);
+    searchTrip();
+  }, [origin, destination, date]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -52,46 +68,34 @@ const SearchScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.title}>Trips</Text>
       </View>
-      <FlatList
-        data={ridesData}
-        showsVerticalScrollIndicator={false}
-        // ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("DetailsSearch", { selectedItem: item });
-            }}
-          >
-            <View
-              style={{
-                paddingHorizontal: 20,
-                marginTop: index === 0 ? 5 : 0,
-                marginBottom: index === ridesData.length - 1 ? 20 : 20,
+      {isLoading ? ( // Display loading indicator if isLoading is true
+        <ActivityIndicator size="large" color={PathColor.primary} />
+      ) : error ? ( // Display error message if an error occurred
+        <Text style={styles.errorText}>{error}</Text>
+      ) : dataSearch && dataSearch.length > 0 ? (
+        <FlatList
+          data={dataSearch}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("DetailsSearch", { selectedItem: item });
               }}
             >
-              <CardResult
-                leavingFrom={item.leavingFrom}
-                leavingTime={item.leavingTime}
-                goingTo={item.goingTo}
-                goingTime={item.goingTime}
-                price={item.price}
-                driverName={item.driverName}
-                driverImage={item.driverImage}
-                rating={item.rating}
-                carType={item.carType}
-                carColor={item.carColor}
-                carNumber={item.carNumber}
-              />
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+              <View style={styles.cardContainer}>
+                <CardResult {...item} />
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.flatListContent}
+        />
+      ) : (
+        <Text>No data</Text>
+      )}
     </View>
   );
 };
-
-export default SearchScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -115,4 +119,19 @@ const styles = StyleSheet.create({
     fontSize: PathFontsSize.s20,
     textAlign: "center",
   },
+  cardContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  flatListContent: {
+    paddingVertical: 5,
+  },
+  errorText: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 16,
+    margin: 20,
+  },
 });
+
+export default SearchScreen;
