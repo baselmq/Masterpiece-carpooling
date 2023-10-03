@@ -16,6 +16,7 @@ const InputCustom = ({
   keyboardType,
   onPressIn,
   onFocus,
+  disabled,
 }) => {
   return (
     <Controller
@@ -29,6 +30,7 @@ const InputCustom = ({
             onFocus={onFocus}
             label={label}
             value={value}
+            disabled={disabled}
             onChangeText={onChange}
             keyboardType={keyboardType}
             mode="outlined"

@@ -5,7 +5,14 @@ import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import { Controller } from "react-hook-form";
 
-const DropDownCustom = ({ control, name, rules, valueOne, valueTwo }) => {
+const DropDownCustom = ({
+  control,
+  name,
+  rules,
+  valueOne,
+  valueTwo,
+  disabled,
+}) => {
   const [open, setOpen] = useState(false);
 
   const labelName = (value = value || "") => {
@@ -29,6 +36,7 @@ const DropDownCustom = ({ control, name, rules, valueOne, valueTwo }) => {
             open={open}
             value={value}
             items={items}
+            disabled={disabled}
             setOpen={setOpen}
             setValue={onChange}
             setItems={setItems}
@@ -47,11 +55,11 @@ export default DropDownCustom;
 
 const styles = StyleSheet.create({
   dropDown: {
-    borderColor: PathColor.gray[400],
+    borderColor: PathColor.gray[100],
     borderRadius: 10,
     paddingVertical: 16,
   },
-  text: { fontSize: 16, color: PathColor.gray[800] },
+  text: { fontSize: 16, color: PathColor.gray[400] },
   error: {
     color: PathColor.red[500],
     fontFamily: PathFonts.PoppinsRegular,

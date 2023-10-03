@@ -60,7 +60,7 @@ const PublishScreen = () => {
 
   return isLoading ? (
     <LoadingCustom />
-  ) : data.data !== null ? (
+  ) : data !== null && data.data !== null ? (
     <SetFromLocPublish />
   ) : (
     <JoinNow />

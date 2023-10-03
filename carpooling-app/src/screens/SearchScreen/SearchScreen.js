@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  ActivityIndicator, // Import the ActivityIndicator component
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { PathIcons } from "../../utils/PathIcons";
@@ -15,6 +14,9 @@ import { useBookingCxt } from "../../hooks/useBookingCxt";
 import CardResult from "./components/CardResult";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
+import { PathImages } from "../../utils/PathImages";
+import LoadingCustom from "../../components/Loading";
+import BtnOutlineCustom from "../../components/buttons/BtnOutlineCustom";
 
 const SearchScreen = () => {
   const navigation = useNavigation();
@@ -68,7 +70,7 @@ const SearchScreen = () => {
         <Text style={styles.title}>Trips</Text>
       </View>
       {isLoading ? ( // Display loading indicator if isLoading is true
-        <ActivityIndicator size="large" color={PathColor.primary} />
+        <LoadingCustom />
       ) : error ? ( // Display error message if an error occurred
         <Text style={styles.errorText}>{error}</Text>
       ) : dataSearch && dataSearch.length > 0 ? (
@@ -90,7 +92,19 @@ const SearchScreen = () => {
           contentContainerStyle={styles.flatListContent}
         />
       ) : (
-        <Text>No data</Text>
+        <View style={{ padding: 20, alignItems: "center" }}>
+          <Text style={styles.textNotFound}>
+            Sorry, there are no cars available at the moment
+          </Text>
+          {PathImages.notFoundCar}
+
+          <View style={{ marginTop: 80, width: "70%" }}>
+            <BtnOutlineCustom
+              title={"Back"}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+        </View>
       )}
     </View>
   );
@@ -130,6 +144,12 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
     margin: 20,
+  },
+  textNotFound: {
+    fontFamily: PathFonts.PoppinsMedium,
+    fontSize: 19,
+    textAlign: "center",
+    marginBottom: 50,
   },
 });
 

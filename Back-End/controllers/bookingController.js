@@ -1,5 +1,6 @@
 const Booking = require("../models/bookingModel");
-
+const Trip = require("../models/tripModel");
+const Driver = require("../models/driverModel");
 // ----------------- get All Booking -----------------
 exports.getAllBooking = async (req, res) => {
   const user_id = req.user._id;
@@ -9,6 +10,53 @@ exports.getAllBooking = async (req, res) => {
       status: "success",
       results: bookings.length,
       data: bookings,
+    });
+  } catch (error) {
+    res.status(404).json({ status: "fail", message: error.message });
+  }
+};
+
+exports.getMeBooking = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const bookings = await Booking.find({ user_id: userId }).select(
+      "-updatedAt -createdAt -__v"
+    );
+
+    if (bookings.length === 0) {
+      return res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    }
+
+    const results = await Promise.all(
+      bookings.map(async (booking) => {
+        try {
+          const trip = await Trip.findById(booking.trip_id).select(
+            "-_id -updatedAt -createdAt -__v"
+          );
+          const driver = await Driver.findById(booking.driver_id).select(
+            "-_id -updatedAt -createdAt -__v -verified -driver_address -driver_occupation -driver_workplace"
+          );
+
+          const data = {
+            ...booking.toObject(),
+            ...trip.toObject(),
+            ...driver.toObject(),
+          };
+          return data;
+        } catch (error) {
+          console.error(`Error processing element: ${booking}`, error);
+          throw error; // Re-throw the error to handle it later if needed
+        }
+      })
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: results,
     });
   } catch (error) {
     res.status(404).json({ status: "fail", message: error.message });

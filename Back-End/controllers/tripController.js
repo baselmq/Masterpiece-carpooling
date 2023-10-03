@@ -37,7 +37,7 @@ exports.searchTrips = async (req, res) => {
             "-_id -updatedAt -createdAt -__v"
           );
           const driver = await Driver.findById(trip.driver_id).select(
-            "-_id -updatedAt -createdAt -__v"
+            "-_id -updatedAt -createdAt -__v -verified -driver_address -driver_occupation -driver_workplace"
           );
           const data = {
             ...trip.toObject(),

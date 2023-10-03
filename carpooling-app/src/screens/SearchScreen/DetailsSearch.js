@@ -10,6 +10,8 @@ import BtnCustom from "../../components/buttons/BtnCustom";
 import CustomDivider from "../../components/CustomDivider";
 import { dateToUserInterface } from "../../components/date_time/CalendarCustom";
 import { sumTime } from "../../components/sumTime";
+import { useUploadData } from "../../hooks/useUploadData";
+import { useUserBookingCxt } from "../../hooks/useBookingCxt";
 
 const DetailsSearch = ({ navigation }) => {
   const route = useRoute();
@@ -17,6 +19,19 @@ const DetailsSearch = ({ navigation }) => {
   const timeTrip = sumTime(item.time, item.travel_time.duration.text);
   const indexOfColor = PathColor.colorsCarNames.indexOf(item.car_color);
   const colorCar = PathColor.colorsCar[indexOfColor];
+  const { dispatch } = useUserBookingCxt();
+  const type = "ADD_BOOKING";
+  const path = "booking";
+
+  const { uploadData, isLoading, error } = useUploadData(dispatch, type, path);
+
+  const handelSubmit = () => {
+    const data = {
+      trip_id: item._id,
+      driver_id: item.driver_id,
+    };
+    uploadData(data);
+  };
   const RenderHeader = () => (
     <View style={styles.header}>
       <TouchableOpacity
@@ -109,7 +124,12 @@ const DetailsSearch = ({ navigation }) => {
         </View>
       </View>
 
-      <BtnCustom title={"Booking"} onPress={() => {}} />
+      <BtnCustom
+        title={"Booking"}
+        isLoading={isLoading}
+        onPress={handelSubmit}
+      />
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
@@ -148,7 +168,7 @@ const styles = StyleSheet.create({
     width: 10,
     borderRadius: 40,
     top: 6,
-    left: 66,
+    left: 75,
   },
   line: {
     position: "absolute",
@@ -156,7 +176,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 3,
     height: 60,
     top: 15,
-    left: 69,
+    left: 78,
   },
 
   // Driver Info
@@ -181,6 +201,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 70,
     alignSelf: "center",
+  },
+
+  error: {
+    color: PathColor.red[500],
+    fontFamily: PathFonts.PoppinsMedium,
+    fontSize: PathFontsSize.s12,
+    marginTop: 10,
   },
 });
 

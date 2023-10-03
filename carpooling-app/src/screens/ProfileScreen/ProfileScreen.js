@@ -43,8 +43,18 @@ const HomeScreen = ({ navigation }) => {
 
         {/* ---------------- form ----------------*/}
         <View style={styles.form}>
-          <InputCustom control={control} name={"email"} label={"Email"} />
-          <InputCustom control={control} name={"phone"} label={"Phone"} />
+          <InputCustom
+            control={control}
+            name={"email"}
+            label={"Email"}
+            disabled={true}
+          />
+          <InputCustom
+            control={control}
+            name={"phone"}
+            label={"Phone"}
+            disabled={true}
+          />
           {/* <InputCustom control={control} name={"gender"} label={"Gender"} /> */}
 
           <DropDownCustom
@@ -52,6 +62,7 @@ const HomeScreen = ({ navigation }) => {
             name={"gender"}
             valueOne={"Male"}
             valueTwo={"female"}
+            disabled={true}
           />
           <View style={{ marginTop: 30 }}>
             <BtnOutlineCustom title={"Logout"} onPress={() => {}} />

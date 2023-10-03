@@ -13,6 +13,8 @@ router
   .get(bookingController.getAllBooking)
   .post(bookingController.createBooking);
 
+router.route("/me").get(bookingController.getMeBooking);
+
 router
   .route("/:id")
   .get(bookingController.getBooking)

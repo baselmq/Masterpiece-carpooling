@@ -9,3 +9,13 @@ const LoadingCustom = () => {
   );
 };
 export default LoadingCustom;
+
+export const BtnLoading = () => {
+  return (
+    <View
+      style={{ justifyContent: "center", alignItems: "center", padding: 3.3 }}
+    >
+      <ActivityIndicator size={"small"} color={PathColor.white} />
+    </View>
+  );
+};

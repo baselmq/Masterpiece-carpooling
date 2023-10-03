@@ -2,11 +2,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
+import { BtnLoading } from "../Loading";
 
-const BtnCustom = ({ title, onPress }) => {
+const BtnCustom = ({ title, onPress, isLoading = false }) => {
   return (
-    <TouchableOpacity style={styles.btnStyle} onPress={onPress}>
-      <Text style={styles.btnText}>{title}</Text>
+    <TouchableOpacity
+      disabled={isLoading}
+      style={styles.btnStyle}
+      onPress={onPress}
+    >
+      {isLoading ? <BtnLoading /> : <Text style={styles.btnText}>{title}</Text>}
     </TouchableOpacity>
   );
 };
