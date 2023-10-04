@@ -123,7 +123,11 @@ const HomeScreen = ({ navigation, route }) => {
           {/* ------------ button Search ------------ */}
           <TouchableHighlight
             style={styles.btnSearch}
-            onPress={() => navigation.push("Search")}
+            onPress={() => {
+              if (origin && destination) {
+                navigation.push("Search");
+              }
+            }}
           >
             <Text
               style={[

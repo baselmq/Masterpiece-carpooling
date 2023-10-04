@@ -11,16 +11,26 @@ import BtnOutlineCustom from "../../components/buttons/BtnOutlineCustom";
 import DropDownCustom from "../../components/select/DropDownCustom";
 import { PathIcons } from "../../utils/PathIcons";
 import { useUserContext } from "../../hooks/useUserContext";
+import { useLogout } from "../../hooks/useLogout";
 const HomeScreen = ({ navigation }) => {
   const { userData } = useUserContext();
+  const { logout } = useLogout();
+
+  const defaultValues = {
+    email: "",
+    gender: "male",
+    phone: "",
+  };
+
+  if (userData && userData.data) {
+    defaultValues.email = userData.data.email;
+    defaultValues.phone = userData.data.phone;
+  }
 
   const { control } = useForm({
-    defaultValues: {
-      email: userData.data.email,
-      gender: "male",
-      phone: userData.data.phone,
-    },
+    defaultValues,
   });
+
   return (
     <View style={styles.continuer}>
       {/* ---------------- header ----------------*/}
@@ -65,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
             disabled={true}
           />
           <View style={{ marginTop: 30 }}>
-            <BtnOutlineCustom title={"Logout"} onPress={() => {}} />
+            <BtnOutlineCustom title={"Logout"} onPress={() => logout()} />
           </View>
         </View>
       </View>

@@ -64,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
             />
           }
         />
-        {error && <Text>{error}</Text>}
+        {error && <Text style={styles.error}>{error}</Text>}
 
         <Text
           style={styles.forgetPass}
@@ -75,7 +75,11 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       {/* ----------- button sign in ----------- */}
-      <BtnCustom title={"Sign In"} onPress={handleSubmit(onSubmit)} />
+      <BtnCustom
+        isLoading={isLoading}
+        title={"Sign In"}
+        onPress={handleSubmit(onSubmit)}
+      />
 
       {/* ----------- button sign up ----------- */}
       <View style={styles.signup}>
@@ -127,5 +131,12 @@ const styles = StyleSheet.create({
   textSignup: {
     fontFamily: PathFonts.PoppinsMedium,
     fontSize: PathFontsSize.s14,
+  },
+  error: {
+    color: PathColor.red[500],
+    fontFamily: PathFonts.PoppinsRegular,
+    fontSize: PathFontsSize.s12,
+    marginTop: 2,
+    marginLeft: 2,
   },
 });

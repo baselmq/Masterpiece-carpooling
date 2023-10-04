@@ -9,14 +9,14 @@ import React, { useEffect, useState } from "react";
 import { PathIcons } from "../../utils/PathIcons";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
-import { useBookingCxt, useUserBookingCxt } from "../../hooks/useBookingCxt";
-import { useNavigation } from "@react-navigation/native";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { PathApi } from "../../utils/PathApi";
 import LoadingCustom from "../../components/Loading";
-import CardResult from "../SearchScreen/components/CardResult";
 import { PathImages } from "../../utils/PathImages";
+import { useUserBookingCxt } from "../../hooks/useBookingCxt";
 import BtnOutlineCustom from "../../components/buttons/BtnOutlineCustom";
+import CardYourRides from "./CardYourRides";
+import { useFocusEffect } from "@react-navigation/native";
 
 const YourRidesScreen = ({ navigation }) => {
   const { user } = useAuthContext();
@@ -24,35 +24,43 @@ const YourRidesScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [dataBooking, setDataBooking] = useState([]);
+  const { userBooking, dispatch } = useUserBookingCxt();
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${PathApi.endpoint}/booking/me`, {
+        headers: {
+          Authorization: `Bearer ${user}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error fetching data");
+      }
+
+      const json = await response.json();
+      setDataBooking(json.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const searchTrip = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const response = await fetch(`${PathApi.endpoint}/booking/me`, {
-          headers: {
-            Authorization: `Bearer ${user}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error fetching data");
-        }
-
-        const json = await response.json();
-        setDataBooking(json.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    searchTrip();
+    fetchData(); // Fetch data when the component mounts
   }, []);
+
+  // Use useFocusEffect to fetch data whenever the screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -67,14 +75,24 @@ const YourRidesScreen = ({ navigation }) => {
       {isLoading ? ( // Display loading indicator if isLoading is true
         <LoadingCustom />
       ) : error ? ( // Display error message if an error occurred
-        <Text style={styles.errorText}>{error}</Text>
+        <View
+          style={{ flex: 0.9, alignItems: "center", justifyContent: "center" }}
+        >
+          {PathImages.Error404}
+          <View style={{ marginTop: 80, width: "70%" }}>
+            <BtnOutlineCustom
+              title={"Back"}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+        </View>
       ) : dataBooking && dataBooking.length > 0 ? (
         <FlatList
           data={dataBooking}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
-              <CardResult {...item} />
+              <CardYourRides {...item} />
             </View>
           )}
           keyExtractor={(item) => item._id}
@@ -83,14 +101,14 @@ const YourRidesScreen = ({ navigation }) => {
       ) : (
         <View style={{ padding: 20, alignItems: "center" }}>
           <Text style={styles.textNotFound}>
-            Sorry, there are no cars available at the moment
+            You do not have any reservations
           </Text>
-          {PathImages.notFoundCar}
+          {PathImages.calender}
 
           <View style={{ marginTop: 80, width: "70%" }}>
             <BtnOutlineCustom
-              title={"Back"}
-              onPress={() => navigation.goBack()}
+              title={"Home"}
+              onPress={() => navigation.navigate("Home2")}
             />
           </View>
         </View>

@@ -4,13 +4,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { PathIcons } from "../../utils/PathIcons";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
+import { BtnLoading } from "../Loading";
 
-const BtnNext = ({ onPress, publish = false }) => {
+const BtnNext = ({ onPress, publish = false, isLoading = false }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.buttonCallout}>
-        {publish && <Text style={styles.publish}>Publish</Text>}
-        {PathIcons.getArrowMap((size = 28), (color = "white"))}
+        {isLoading ? (
+          <BtnLoading />
+        ) : (
+          <>
+            {publish && <Text style={styles.publish}>Publish</Text>}
+            {PathIcons.getArrowMap((size = 28), (color = "white"))}
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );

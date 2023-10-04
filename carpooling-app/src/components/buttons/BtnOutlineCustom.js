@@ -3,9 +3,12 @@ import React from "react";
 import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 
-const BtnOutlineCustom = ({ title, onPress }) => {
+const BtnOutlineCustom = ({ title, onPress, flexBtn }) => {
   return (
-    <TouchableOpacity style={styles.btnStyle} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.btnStyle, flexBtn ? { flex: 1 } : {}]}
+      onPress={onPress}
+    >
       <Text style={styles.btnText}>{title}</Text>
     </TouchableOpacity>
   );

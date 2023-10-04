@@ -119,7 +119,7 @@ const RegisterScreen = ({ navigation }) => {
           valueTwo={"female"}
         /> */}
           {/* ----------- Terms and Conditions ----------- */}
-          {error && <Text>{error}</Text>}
+          {error && <Text style={styles.error}>{error}</Text>}
           <View style={styles.terms}>
             <CheckboxCustom
               control={control}
@@ -143,7 +143,11 @@ const RegisterScreen = ({ navigation }) => {
         </View>
 
         {/* ----------- button sign up ----------- */}
-        <BtnCustom title={"Sign Up"} onPress={handleSubmit(onSubmit)} />
+        <BtnCustom
+          title={"Sign Up"}
+          isLoading={isLoading}
+          onPress={handleSubmit(onSubmit)}
+        />
 
         {/* ----------- button sign in ----------- */}
         <View style={styles.signIn}>
@@ -200,5 +204,12 @@ const styles = StyleSheet.create({
     fontFamily: PathFonts.PoppinsMedium,
     fontSize: PathFontsSize.s12,
     marginTop: 10,
+  },
+  error: {
+    color: PathColor.red[500],
+    fontFamily: PathFonts.PoppinsRegular,
+    fontSize: PathFontsSize.s12,
+    marginTop: 2,
+    marginLeft: 2,
   },
 });

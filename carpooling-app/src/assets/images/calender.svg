@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512"
+    height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve"
+    class="">
+    <g>
+        <g data-name="Layer 2">
+            <rect width="21.5" height="17.5" x="1.25" y="4.25" fill="#00aff5" rx="1.5" opacity="1"
+                data-original="#00aff5"></rect>
+            <path fill="#1565c0" d="M22.75 5.75v4H1.25v-4a1.5 1.5 0 0 1 1.5-1.5h18.5a1.5 1.5 0 0 1 1.5 1.5z" opacity="1"
+                data-original="#1565c0"></path>
+            <path fill="#ffffff"
+                d="M11.5 17.42a.79.79 0 0 1-.5-.22l-1.78-1.75a.75.75 0 0 1 0-1.06.74.74 0 0 1 1.06 0l1.22 1.22 3-3a.74.74 0 0 1 1.06 0 .75.75 0 0 1 0 1.06L12 17.2a.79.79 0 0 1-.5.22z"
+                opacity="1" data-original="#ffffff"></path>
+            <g fill="#1565c0">
+                <path
+                    d="M5 5.75A.76.76 0 0 1 4.25 5V3a.75.75 0 0 1 1.5 0v2a.76.76 0 0 1-.75.75zM9.67 5.75A.75.75 0 0 1 8.92 5V3a.75.75 0 0 1 1.5 0v2a.76.76 0 0 1-.75.75zM14.33 5.75a.76.76 0 0 1-.75-.75V3a.75.75 0 1 1 1.5 0v2a.75.75 0 0 1-.75.75zM19 5.75a.76.76 0 0 1-.75-.75V3a.75.75 0 0 1 1.5 0v2a.76.76 0 0 1-.75.75z"
+                    fill="#1565c0" opacity="1" data-original="#1565c0"></path>
+            </g>
+        </g>
+    </g>
+</svg>

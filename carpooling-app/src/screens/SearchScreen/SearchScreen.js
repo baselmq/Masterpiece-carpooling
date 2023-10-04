@@ -72,7 +72,17 @@ const SearchScreen = () => {
       {isLoading ? ( // Display loading indicator if isLoading is true
         <LoadingCustom />
       ) : error ? ( // Display error message if an error occurred
-        <Text style={styles.errorText}>{error}</Text>
+        <View
+          style={{ flex: 0.9, alignItems: "center", justifyContent: "center" }}
+        >
+          {PathImages.Error404}
+          <View style={{ marginTop: 80, width: "70%" }}>
+            <BtnOutlineCustom
+              title={"Back"}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+        </View>
       ) : dataSearch && dataSearch.length > 0 ? (
         <FlatList
           data={dataSearch}

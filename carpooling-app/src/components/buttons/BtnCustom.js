@@ -4,11 +4,11 @@ import { PathColor } from "../../utils/PathColor";
 import { PathFonts, PathFontsSize } from "../../utils/PathFonts";
 import { BtnLoading } from "../Loading";
 
-const BtnCustom = ({ title, onPress, isLoading = false }) => {
+const BtnCustom = ({ title, onPress, isLoading = false, flexBtn }) => {
   return (
     <TouchableOpacity
       disabled={isLoading}
-      style={styles.btnStyle}
+      style={[styles.btnStyle, flexBtn ? { flex: 1 } : {}]}
       onPress={onPress}
     >
       {isLoading ? <BtnLoading /> : <Text style={styles.btnText}>{title}</Text>}
