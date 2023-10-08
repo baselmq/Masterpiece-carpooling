@@ -1,0 +1,361 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Cairo";
+}
+
+/* Start Root */
+:root {
+  --color-primery: #00AFF5;
+  --color-secondary: black;
+  --color-black: black;
+  --color-white: white;
+}
+
+h1,
+h4,
+h2,
+h3,
+h5 {
+  font-weight: bolder !important ;
+}
+
+a {
+  text-decoration: none !important;
+}
+/* End Root */
+
+/*  Start Nav Bar*/
+
+.logo {
+  width: 80px;
+}
+.navbar__ul {
+  margin-left: 15px;
+}
+
+.navbar__ul:hover {
+  color: #00AFF5 !important;
+}
+.custom_navbar {
+  background: #ffffff;
+  align-items: flex-start !important;
+  width: 100%;
+  display: flex !important;
+  position: fixed !important;
+  top: 0;
+  z-index: 2;
+}
+.btstrap-btn::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform-origin: center right;
+  transform: scaleX(0);
+  border-radius: 32px;
+  transition: transform 0s ease-in-out !important;
+  outline: none !important;
+}
+
+.btstrap-btn:focus,
+.custom-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Button style on active */
+
+.btstrap-btn {
+  font-size: 14px !important;
+  background-color: white !important;
+  color: white !important;
+  border: none !important;
+  /* border-radius: 0 !important; */
+  background-image: url("../../public/Background.png") !important;
+}
+
+/* End nav bar */
+
+/* Start Home Section */
+.home__section {
+  background-image: url(../../public/Background.jpg);
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.home_blackImg {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.home__section h1 {
+  color: white;
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.buttons .btn {
+  color: #00AFF5;
+}
+.home__section .buttons button:nth-child(1) {
+  border: none;
+  padding: 3px 20px;
+  border-radius: 6px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.home__section .buttons button:nth-child(1):hover {
+  background-color: #ffffff;
+  color: white;
+}
+
+.home__section .buttons button:nth-child(2) {
+  border-radius: 6px;
+  padding: 3px 20px;
+  border-radius: 16px;
+  background-color: transparent;
+  border: 2px solid #00AFF5;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.home__section .buttons button:nth-child(2):hover {
+  background-color: #ffffff;
+  transition: 0.3s;
+  color: white !important;
+}
+
+.btn {
+  text-decoration: none;
+}
+
+/* End Home */
+
+/* about section*/
+
+.about {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.about .about__text {
+  width: 72vmin;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* End about Section */
+
+/* Start Services */
+
+section {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+section img {
+  width: 300px;
+  height: 300px;
+}
+
+.galary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 300px));
+  justify-content: center;
+}
+.galary img {
+  padding: 10px;
+}
+/* End Services */
+
+/* start products */
+
+.item__info {
+  border-radius: 32px;
+  background-color: #fff7ed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item__info img {
+  width: 50%;
+}
+
+.item__info button {
+  border: none;
+  background-color: none;
+  width: 100%;
+  height: 50px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+}
+
+.buy_now {
+  background-color: #00AFF5 !important;
+}
+
+.card-st {
+  background-color: #fff7ed;
+  border-radius: 16px;
+}
+.card-st img {
+  margin-top: 20px;
+  height: 220px;
+}
+.card-st p {
+  margin-top: 20px;
+  font-size: 13px;
+}
+.card-st button {
+  width: 100%;
+  border: none;
+  background-color: #00AFF5;
+  font-weight: bold;
+  height: 60px;
+  border-radius: 0px 0px 16px 16px;
+}
+
+/* menu products */
+.product_name {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.product_price {
+  font-weight: bold;
+  color: white;
+}
+.product_price:hover {
+  color: #00AFF5;
+  cursor: pointer;
+}
+
+.buy__now {
+  color: white !important ;
+}
+.buy__now:hover {
+  color: white !important;
+  background-color: #171717;
+  transition: 0.3s;
+  cursor: pointer;
+}
+/* end products */
+
+/* Start feature */
+.feature h4 {
+  color: #2a3342;
+  font-weight: bolder;
+}
+.feature img {
+  width: 60px;
+}
+
+/* end feature */
+
+/* Image */
+
+.image__pattern {
+  width: 100%;
+  object-fit: cover;
+  background: cover;
+  background: contain;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 80%);
+  filter: grayscale(40%);
+  margin-top: 20px;
+}
+.image__pattern img {
+  background-color: rgba(0, 0, 0, 80%);
+}
+
+/* End image */
+
+/* Start Menu */
+
+.menu__image {
+  color: #113d56;
+  /* background-image: url(../../public/Background.png) !important; */
+  min-width: 100%;
+  height: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0 !important;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.black__image {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.menu__image .row .menu__product img:hover {
+  /* border: 1px solid bisque; */
+}
+
+.btn__seeAllMenu {
+  padding: 5px 46px;
+  border-radius: 16px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid #00AFF5;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.btn__seeAllMenu:hover {
+  background-color: #00AFF5;
+  transition: 0.3s;
+}
+
+/* End Menu */
+
+/* contact us  */
+
+form label {
+  margin-top: 10px;
+}
+
+.sub__btn {
+  width: 100px;
+}
+
+form input,
+textarea {
+  padding: 5px 5px;
+  text-align: start;
+}
+
+form button {
+  border: none;
+  text-decoration: none;
+  border-radius: 6px;
+  background-color: #00AFF5;
+  padding: 10px;
+}
+
+/* End contact us */
+
+.img-fluid {
+  width: 550px;
+}
